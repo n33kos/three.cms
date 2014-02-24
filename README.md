@@ -1,23 +1,7 @@
 three.cms
 =========
-three.cms is a content management system which utilizes the three.js library to streamline the creation of interactive 3D web environments.
+three.cms is a simple content management system which integrates three.js to streamline the creation of interactive web3D environments.
 
-To-Do
-=========
-- Better AO, more complex post processing (FXAA, Gods Rays, lens flare, etc.)
-- Better scene loading
-- Per-object texturing
-- Array based light inclusion
-- GUI / HTML
-- Textual Data display
-- Scene Transitions
-- 'Smooth transition' Preset camera positions.
-- Actual CMS functionality 
-- Everything else
-
-
-Changelog
-=========
 
 Version 0.0.2
 =========
@@ -39,3 +23,16 @@ Template Experimentation:
 - Began default template construction
 - Added config file
 - Added very basic scene loading
+
+To-Do
+=========
+- Better AO, more complex post processing (FXAA, Gods Rays, lens flare, etc.)
+- Better scene loading
+- Per-object texturing
+- Array based light inclusion
+- GUI / HTML
+- Textual Data display
+- Scene Transitions
+- 'Smooth transition' Preset camera positions.
+- Actual CMS functionality 
+- Everything else
