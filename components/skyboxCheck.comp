@@ -1,0 +1,49 @@
+<?php
+
+echo '
+	
+function loadTexture( path ) {
+
+	var texture = new THREE.Texture( texture_placeholder );
+	var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+
+	var image = new Image();
+	image.onload = function () {
+
+		texture.needsUpdate = true;
+		material.map.image = this;
+
+		render();
+
+	};
+	image.src = path;
+
+	return material;
+
+}
+
+var texture_placeholder = document.createElement( "canvas" );
+texture_placeholder.width = 128;
+texture_placeholder.height = 128;
+
+var context = texture_placeholder.getContext( "2d" );
+context.fillStyle = "rgb( 200, 200, 200 )";
+context.fillRect( 0, 0, texture_placeholder.width, texture_placeholder.height );
+
+var materials = [
+	loadTexture( "' . $skyboxTextures['right'] . '" ), // right
+	loadTexture( "' . $skyboxTextures['left'] . '" ), // left
+	loadTexture( "' . $skyboxTextures['top'] . '" ), // top
+	loadTexture( "' . $skyboxTextures['bottom'] . '" ), // bottom
+	loadTexture( "' . $skyboxTextures['back'] . '" ), // back
+	loadTexture( "' . $skyboxTextures['front'] . '" )  // front
+];
+
+mesh = new THREE.Mesh( new THREE.CubeGeometry( ' . $skyboxScale . ', ' . $skyboxScale . ', ' . $skyboxScale . ', 7, 7, 7 ), new THREE.MeshFaceMaterial( materials ) );
+mesh.scale.x = - 1;
+scene.add( mesh );
+
+
+';
+
+?>

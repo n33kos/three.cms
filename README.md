@@ -1,10 +1,8 @@
 three.cms
 =========
-
 three.cms is a content management system which utilizes the three.js library to streamline the creation of interactive 3D web environments.
 
---------------------To-Do List-------------------------
--------------------------------------------------------
+To-Do
 =========
 - Better AO, more complex post processing (FXAA, Gods Rays, lens flare, etc.)
 - Better scene loading
@@ -15,22 +13,21 @@ three.cms is a content management system which utilizes the three.js library to 
 - Scene Transitions
 - 'Smooth transition' Preset camera positions.
 - Actual CMS functionality 
+- Everything else
 
 
-
---------------------ChangeLog--------------------------
--------------------------------------------------------
+Changelog
 =========
 
 Version 0.0.2
-------------------------------------------------------
+=========
 - Added realtime shading and shadow blend methods
 - Added Default Lighting Rigs: directional, hemisphere, ambient, point, area, spot
 - Added Pointerlock controls
 - Fixed some bugs related to render shaders
 
 Version 0.0.1
-------------------------------------------------------
+=========
 Template Experimentation:
 - Added Fog
 - Added ambient occlusion (Mostly Broken)

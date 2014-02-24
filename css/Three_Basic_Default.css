@@ -1,0 +1,76 @@
+body,html{
+	margin-top:0;
+	width:100%;
+    height: 100%;
+}
+body{
+	margin:0 auto 20px auto;
+	font-size:14px;
+    overflow: hidden;
+}
+canvas {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -5;
+}
+#Inits{
+	float:center;
+	margin: 0 auto;
+	max-height:100px;
+	overflow-y:scroll;
+	font-size:12px;
+	border:1px solid #ccc;
+    background: rgba(255,255,255,0.5);
+    visibility: hidden;
+}
+#menu {
+	float:center;
+	margin: 0 auto;
+	max-height:100px;
+	overflow-y:scroll;
+	font-size:12px;
+	border:1px solid #ccc;
+    background: rgba(255,255,255,0.5);
+    visibility: hidden;
+}
+#menu li,
+#menu li a{
+	display:inline-block;
+}
+
+#menu li a{
+}
+
+#content{
+	float:center;
+	max-height:400px;
+	overflow-y:scroll;
+	font-size:12px;
+	border:1px solid #ccc;
+    background: rgba(255,255,255,0.5);
+    visibility: hidden;
+}
+
+#column{
+	width:160px;
+	float:left;
+	margin-left:20px;
+	border:1px solid #ccc;
+    background: rgba(255,255,255,0.5);
+}
+
+#GUI{
+    background: rgba(255,255,255,0.5);
+    width:100%;
+    position:absolute;
+    bottom:0;
+    left:0;
+    text-align:center;
+}
+/*-------------Helpers---------------------*/
+.visible{
+	visibility:visible!important;
+}
