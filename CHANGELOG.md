@@ -1,5 +1,4 @@
-To-Do
-=========
+### To-Do ###
 - Better AO, more complex post processing (FXAA, Gods Rays, lens flare, etc.)
 - Better scene loading
 - Per-object texturing
@@ -11,15 +10,13 @@ To-Do
 - Actual CMS functionality 
 - Everything else
 
-Version 0.0.2
-=========
+### 0.0.2 ###
 - Added realtime shading and shadow blend methods
 - Added Default Lighting Rigs: directional, hemisphere, ambient, point, area, spot
 - Added Pointerlock controls
 - Fixed some bugs related to render shaders
 
-Version 0.0.1
-=========
+### 0.0.1 ###
 Template Experimentation:
 - Added Fog
 - Added ambient occlusion (Mostly Broken)
