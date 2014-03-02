@@ -1,79 +1,81 @@
 <?php 
-switch ($lightMode) {
-	case 'directional':
-		echo '
-		mainlight = new THREE.DirectionalLight( ' . $lightColor .' );
-		mainlight.intensity = '. $lightIntensity . ';
-		';
-		if($realtimeShadows_bit == true){
-			echo'
-			mainlight.shadowCameraNear = 50;
-			mainlight.shadowCameraFar = 1000;
-			mainlight.castShadow = true;
-			mainlight.shadowDarkness = 0.9;
-			mainlight.shadowMapWidth = 2048;
-			mainlight.shadowMapHeight = 2048;
+foreach ($lights as $key => $value) {
+	switch ($value->lightMode) {
+		case 'directional':
+			echo '
+			mainlight = new THREE.DirectionalLight( ' . $value->lightColor .' );
+			mainlight.intensity = '. $value->lightIntensity . ';
 			';
-		}
-		echo '
-		//light target
-		lightTarget = new THREE.Object3D();
-		lightTarget.name = "lightTarget";
-		mainlight.target = lightTarget;
-		lightTarget.position.set(20,0,0);
+			if($realtimeShadows_bit == true){
+				echo'
+				mainlight.shadowCameraNear = 50;
+				mainlight.shadowCameraFar = 1000;
+				mainlight.castShadow = true;
+				mainlight.shadowDarkness = 0.9;
+				mainlight.shadowMapWidth = 2048;
+				mainlight.shadowMapHeight = 2048;
+				';
+			}
+			echo '
+			//light target
+			lightTarget = new THREE.Object3D();
+			lightTarget.name = "lightTarget";
+			mainlight.target = lightTarget;
+			lightTarget.position.set(20,0,0);
 
-		lightTarget.add( mainlight ); //adding mainlight as child to lightTarget (easy rotation controls via parent)
-		mainlight.position.set(0,500,0) // moving mainlight away from its parent
-		scene.add( lightTarget );
-		lightTarget.rotation.set(0,-0.5,1) //setting elevation and azimuth via mainlights parent
-		';
-    break;
-    case 'spot':
-	    echo'
-		var spotLight = new THREE.SpotLight( ' . $lightColor .' );
-		spotLight.position.set( 200, 1000, 150 );
-		spotLight.intensity='. $lightIntensity . ';
-		';
-		if($realtimeShadows_bit == true){
-			echo'
-			spotLight.castShadow = true;
-			spotLight.shadowMapWidth = 1024;
-			spotLight.shadowMapHeight = 1024;
-			spotLight.shadowCameraNear = 500;
-			spotLight.shadowCameraFar = 4000;
-			spotLight.shadowCameraFov = 30;
+			lightTarget.add( mainlight ); //adding mainlight as child to lightTarget (easy rotation controls via parent)
+			mainlight.position.set(0,500,0) // moving mainlight away from its parent
+			scene.add( lightTarget );
+			lightTarget.rotation.set(0,-0.5,1) //setting elevation and azimuth via mainlights parent
 			';
-		}
-		echo '
-		scene.add( spotLight )
-	    ';
-    break;
-    case 'ambient':
-    	$realtimeShadows_bit = false;
-    	echo'
-		var light = new THREE.AmbientLight( ' . $lightColor . ' ); // soft white light
-		scene.add( light );
-		';
-    break;
-    case 'hemisphere':
-    	$realtimeShadows_bit = false;
-    	echo'
-		hemiLight = new THREE.HemisphereLight( ' . $lightColor . ', ' . $lightColor . ', ' . $lightIntensity . ' );
-		';
-		echo'
-		//hemiLight.color.setHSL( 0.6, 1, 0.6 );
-		//hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-		hemiLight.position.set( 0, 500, 0 );
-		scene.add( hemiLight );
-		';
-    break;
-    case 'point':
-    	$realtimeShadows_bit = false;
-	    echo'
-		var light = new THREE.PointLight( ' . $lightColor . ', 1, 100 );
-		light.position.set( 15, 50, 15 );
-		scene.add( light );
-	    ';
-    break;
+	    break;
+	    case 'spot':
+		    echo'
+			var spotLight = new THREE.SpotLight( ' . $value->lightColor .' );
+			spotLight.position.set( 200, 1000, 150 );
+			spotLight.intensity='. $value->lightIntensity . ';
+			';
+			if($realtimeShadows_bit == true){
+				echo'
+				spotLight.castShadow = true;
+				spotLight.shadowMapWidth = 1024;
+				spotLight.shadowMapHeight = 1024;
+				spotLight.shadowCameraNear = 500;
+				spotLight.shadowCameraFar = 4000;
+				spotLight.shadowCameraFov = 30;
+				';
+			}
+			echo '
+			scene.add( spotLight );
+		    ';
+	    break;
+	    case 'ambient':
+	    	$realtimeShadows_bit = false;
+	    	echo'
+			var light = new THREE.AmbientLight( ' . $value->lightColor . ' ); // soft white light
+			scene.add( light );
+			';
+	    break;
+	    case 'hemisphere':
+	    	$realtimeShadows_bit = false;
+	    	echo'
+			hemiLight = new THREE.HemisphereLight( ' . $value->lightColor . ', ' . $value->lightColor . ', ' . $value->lightIntensity . ' );
+			';
+			echo'
+			//hemiLight.color.setHSL( 0.6, 1, 0.6 );
+			//hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+			hemiLight.position.set( 0, 500, 0 );
+			scene.add( hemiLight );
+			';
+	    break;
+	    case 'point':
+	    	$realtimeShadows_bit = false;
+		    echo'
+			var light = new THREE.PointLight( ' . $value->lightColor . ', 1, 100 );
+			light.position.set( 15, 50, 15 );
+			scene.add( light );
+		    ';
+	    break;
+	}
 }
 ?>

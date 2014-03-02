@@ -10,6 +10,9 @@
 - Actual CMS functionality 
 - Everything else
 
+### 0.0.3 ###
+- Created branch dev1 for MVC conversion
+
 ### 0.0.2 ###
 - Added realtime shading and shadow blend methods
 - Added Default Lighting Rigs: directional, hemisphere, ambient, point, area, spot

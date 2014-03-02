@@ -7,19 +7,19 @@ include 'templates/Three_Basic_Default.conf';
     <link rel="stylesheet" type="text/css" href="css/Three_Basic_Default.css">
     <meta name="description" content="this is the description"/>
     <?php 
-        //--------------------SCRIPT INCLUDES ARRAY--------------------------------
+        //--------------------SCRIPT INCLUDES ARRAY------------------------------------
         foreach($scriptIncludes as $key => $script){
             echo '<script type="text/javascript" src="' . $script . '" name="' . $key . '"></script>';
         }
 
-        //--------------------DEPENDENCY CHECKS-------------------------------------
+        //--------------------DEPENDENCY CHECKS----------------------------------------
         if($renderMode == 'ASCII'){
             echo '<script type="text/javascript" src="threejs/effects/AsciiEffect.js" name="ASCII"></script>';
         }
         if($ao_bit == true){
             echo '<script type="text/javascript" src="threejs/shaders/SSAOShader.js" name="ssaoShader"></script>';
         }
-        //--------------------PIXEL SHADERS-------------------------------------
+        //--------------------PIXEL SHADERS--------------------------------------------
         if($usePixelShaders == true || $ao_bit == true){
             echo '
             <script src="threejs/postprocessing/EffectComposer.js"></script>
@@ -30,10 +30,11 @@ include 'templates/Three_Basic_Default.conf';
             <script src="threejs/shaders/CopyShader.js"></script>
             ';   
         }
+        //--------------------RENDER SHADERS--------------------------------------------
         foreach($shaderIncludes as $key => $script){
             echo '<script type="text/javascript" src="' . $script . '" name="' . $key . '"></script>';
         }
-
+        //--------------------CONTROL MODE INCLUDES-------------------------------------
         switch ($controlMode) {
             case 'OrbitControls':
                 echo '<script type="text/javascript" src="threejs/controls/OrbitControls.js" name="OrbitControls"></script>';
