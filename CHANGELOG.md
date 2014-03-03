@@ -7,11 +7,16 @@
 - Textual Data display
 - Scene Transitions
 - 'Smooth transition' Preset camera positions.
-- Actual CMS functionality 
+- Convert settings to sql tables
+- Admin panel
+- mod_rewrite
 - Everything else
 
 ### 0.0.3 ###
+- Ported to basic MVC framework
+- Flipped dev1 branch with Master
 - Created branch dev1 for MVC conversion
+- Added light class to enable array based lighting
 
 ### 0.0.2 ###
 - Added realtime shading and shadow blend methods
