@@ -1,5 +1,8 @@
 <?php
-	//load template
-	require( 'templates/Three_Basic_Default.php' );
-	die();
+
+require 'lib/main.php';
+
+//Controller/View
+run_page('threebasicdefault/index');
+
 ?>
