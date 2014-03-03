@@ -1,22 +1,23 @@
 ### To-Do ###
-- Better AO, more complex post processing (FXAA, Gods Rays, lens flare, etc.)
-- Better scene loading
-- Per-object texturing
-- Array based light inclusion
 - GUI / HTML
 - Textual Data display
 - Scene Transitions
 - 'Smooth transition' Preset camera positions.
+- per component settings
 - Convert settings to sql tables
 - Admin panel
 - mod_rewrite
 - Everything else
+- more complex post processing (Gods Rays, lens flare, bokeh, etc.)
 
 ### 0.0.3 ###
 - Ported to basic MVC framework
 - Flipped dev1 branch with Master
 - Created branch dev1 for MVC conversion
 - Added light class to enable array based lighting
+- Added per-light settings
+- Added Antialiasing
+- Improved Ambient Occlusion
 
 ### 0.0.2 ###
 - Added realtime shading and shadow blend methods

@@ -50,14 +50,12 @@ foreach ($lights as $key => $value) {
 		    ';
 	    break;
 	    case 'ambient':
-	    	$realtimeShadows_bit = false;
 	    	echo'
-			var light = new THREE.AmbientLight( ' . $value->lightColor . ' ); // soft white light
+			var light = new THREE.AmbientLight( ' . $value->lightColor . ' );
 			scene.add( light );
 			';
 	    break;
 	    case 'hemisphere':
-	    	$realtimeShadows_bit = false;
 	    	echo'
 			hemiLight = new THREE.HemisphereLight( ' . $value->lightColor . ', ' . $value->lightColor . ', ' . $value->lightIntensity . ' );
 			';
@@ -69,11 +67,10 @@ foreach ($lights as $key => $value) {
 			';
 	    break;
 	    case 'point':
-	    	$realtimeShadows_bit = false;
 		    echo'
-			var light = new THREE.PointLight( ' . $value->lightColor . ', 1, 100 );
-			light.position.set( 15, 50, 15 );
-			scene.add( light );
+			var pointlight = new THREE.PointLight( ' . $value->lightColor . ', 1, 100 );
+			pointlight.position.set( 15, 50, 15 );
+			scene.add( pointlight );
 		    ';
 	    break;
 	}

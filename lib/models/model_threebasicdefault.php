@@ -11,10 +11,10 @@ class Model_threebasicdefault extends Model
 
 function initSettings(){
 
-    require_once 'light.php';
+    require_once 'class_light.php';
 
     //--------------------------GLOBALS----------------------------
-    global $scriptIncludes, $controlMode, $ao_bit, $usePixelShaders, $shaderIncludes, $canvasTarget, $renderMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $realtimeShadows_bit, $realtimeShadowSmooth, $linearfog_bit, $linearfogColor, $linearfogNear, $linearfogFar, $exponentialfog_bit, $exponentialfogColor, $exponentialfogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures;
+    global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shaderIncludes, $canvasTarget, $renderMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $realtimeShadows_bit, $realtimeShadowSmooth, $linearfog_bit, $linearfogColor, $linearfogNear, $linearfogFar, $exponentialfog_bit, $exponentialfogColor, $exponentialfogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures;
     
     //Canvas Target as jQuery Element
     $canvasTarget = 'body';
@@ -45,17 +45,19 @@ function initSettings(){
         //'mirrorShader' => 'static/js/threejs/shaders/MirrorShader.js',
         //'rgbShiftShader' => 'static/js/threejs/shaders/RGBShiftShader.js',
         //'sepiaShader' => 'static/js/threejs/shaders/SepiaShader.js',
-        'vignetteShader' => 'static/js/threejs/shaders/VignetteShader.js'
+        //'vignetteShader' => 'static/js/threejs/shaders/VignetteShader.js'
         //'edgeDetectionFreiChenShader' => 'static/js/threejs/shaders/EdgeShader.js'
         //'edgeDetectionSobelShader' => 'static/js/threejs/shaders/EdgeShader2.js'
-        //'fxaaShader' => 'static/js/threejs/shaders/FXAAShader.js'
     );
 
     //$renderMode options: WebGL, Canvas, ASCII
     $renderMode = 'WebGL';
 
     //Ambient Occlusion Bit
-    $ao_bit = false;
+    $ao_bit = true;
+
+    //Antialias Bit
+    $aa_bit = true;
 
     //$controlMode options: OrbitControls, FlyControls, PointerLockControls
     $controlMode = 'PointerLockControls';
@@ -66,11 +68,16 @@ function initSettings(){
     $camNear='0.25';
     $camFar='1000';
 
-    //$lightmode options: directional, hemisphere, ambient, point, area, spot
+    //$lightmodes: directional, hemisphere, ambient, point, area, spot
     $lights[] = new light;
+    $lights[0]->setlightMode('ambient');
+    $lights[0]->setlightIntensity(0.5);
+    $lights[0]->setlightColor('0x113344');
+
     $lights[] = new light;
-    $lights[0]->setlightMode('spot');
-    $lights[1]->setlightMode('ambient');
+    $lights[1]->setlightMode('spot');
+    $lights[1]->setlightIntensity(1.5);
+    $lights[1]->setlightColor('0xffffff');
 
     //Realtime-Shadows
     $realtimeShadows_bit = true;

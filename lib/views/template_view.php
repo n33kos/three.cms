@@ -1,7 +1,7 @@
 <?php 
 //include our settings
 initSettings();
-global $scriptIncludes, $controlMode, $ao_bit, $usePixelShaders, $shaderIncludes, $canvasTarget, $renderMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $realtimeShadows_bit, $realtimeShadowSmooth, $linearfog_bit, $linearfogColor, $linearfogNear, $linearfogFar, $exponentialfog_bit, $exponentialfogColor, $exponentialfogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures;
+global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shaderIncludes, $canvasTarget, $renderMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $realtimeShadows_bit, $realtimeShadowSmooth, $linearfog_bit, $linearfogColor, $linearfogNear, $linearfogFar, $exponentialfog_bit, $exponentialfogColor, $exponentialfogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures;
 ?>
 <html>
 <head>
@@ -20,8 +20,11 @@ global $scriptIncludes, $controlMode, $ao_bit, $usePixelShaders, $shaderIncludes
         if($ao_bit == true){
             echo '<script type="text/javascript" src="static/js/threejs/shaders/SSAOShader.js" name="ssaoShader"></script>';
         }
+        if($aa_bit == true){
+            echo '<script type="text/javascript" src="static/js/threejs/shaders/FXAAShader.js" name="fxaaShader"></script>';
+        }
         //--------------------PIXEL SHADERS--------------------------------------------
-        if($usePixelShaders == true || $ao_bit == true){
+        if($usePixelShaders == true || $ao_bit == true || $aa_bit ==true){
             echo '
             <script src="static/js/threejs/postprocessing/EffectComposer.js"></script>
             <script src="static/js/threejs/postprocessing/RenderPass.js"></script>

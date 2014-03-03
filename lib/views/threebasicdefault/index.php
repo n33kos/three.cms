@@ -76,7 +76,6 @@
             $.each( object, function( key, value ) {
                 if(key == '__objectsAdded'){
                     $.each( value, function( key2, value2 ) {
-                        //console.log(value2);
                         value2.castShadow = true;
                         value2.receiveShadow = true;
                         value2.material = material;
@@ -87,7 +86,6 @@
             scene.add(object);
         });
         //-------------------------------------CUSTOMIZATION-------------------------------------
-        //load component settings if need be
         <?php
         include 'static/components/lightCheck.comp';
         include 'static/components/shaderCheck.comp';
@@ -98,7 +96,6 @@
         ?>
         //init camera
         camera.position = new THREE.Vector3(<?php echo $cameraPosition;?>);
-
         //------------------------------------RENDER FUNCTION------------------------------------
         var render = function () {
 

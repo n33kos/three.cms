@@ -8,8 +8,14 @@ class light {
         $this->lightIntensity = 2.0;
         $this->lightColor = '0xffffff';
     }
-    function setlightMode($lmin){
-        $this->lightMode = $lmin;
+    function setlightMode($lmod){
+        $this->lightMode = $lmod;
+    }
+    function setlightIntensity($lint){
+        $this->lightIntensity = $lint;
+    }
+    function setlightColor($lcol){
+        $this->lightColor = $lcol;
     }
 }
 ?>
