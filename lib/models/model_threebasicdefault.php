@@ -11,7 +11,7 @@ class Model_threebasicdefault extends Model
 
 function initSettings(){
 
-    require_once 'class_light.php';
+    require_once dirname(__FILE__) . '/../classes/class_light.php';
 
     //--------------------------GLOBALS----------------------------
     global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shaderIncludes, $canvasTarget, $renderMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $realtimeShadows_bit, $realtimeShadowSmooth, $linearfog_bit, $linearfogColor, $linearfogNear, $linearfogFar, $exponentialfog_bit, $exponentialfogColor, $exponentialfogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures;
@@ -70,9 +70,9 @@ function initSettings(){
 
     //$lightmodes: directional, hemisphere, ambient, point, area, spot
     $lights[] = new light;
-    $lights[0]->setlightMode('ambient');
+    $lights[0]->setlightMode('hemisphere');
     $lights[0]->setlightIntensity(0.5);
-    $lights[0]->setlightColor('0x113344');
+    $lights[0]->setlightColor('0x55FF99');
 
     $lights[] = new light;
     $lights[1]->setlightMode('spot');
@@ -94,12 +94,13 @@ function initSettings(){
     $exponentialfogColor = '#000';
     $exponentialfogDensity = '.005';
     
-    //later on the following two should be replaced with an array for multi-scenes and textures
-    $sceneFile = view_path . 'scenes/TestScene.js';
+    //Options: 'Scene file url', 'default', ''
+    $sceneFile = 'default';
+    //$sceneFile = view_path . 'scenes/TestScene.js';
     $sceneTex = view_path . 'img/DreamOak.jpg';
     
     //---------------------SKYBOX STUFF-------------------------
-    $useSkybox = true;
+    $useSkybox = false;
     $skyboxScale = 1000;
     $skyboxTextures = array(
         'right' => 'static/skybox/px.jpg',
@@ -111,5 +112,6 @@ function initSettings(){
     );
 }
 
+include('lib/');
 
 ?>

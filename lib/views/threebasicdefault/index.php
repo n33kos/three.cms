@@ -52,11 +52,14 @@
             }
 
             //scene handling and fallback
-            if($sceneFile != ''){
+            if($sceneFile == 'default'){
+                echo 'var sceneFile = "static/scenes/Scene_Default.js"';
+            }elseif($sceneFile != ''){
                 echo 'var sceneFile = "' . $sceneFile . '";';
             }else{
-                echo 'var sceneFile = "';
+                echo 'var sceneFile = "none";';
             }
+
         ?>
 
         //-------------------------------------WINDOW RESIZE-------------------------------------
@@ -72,19 +75,21 @@
         var material = new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('<?php echo $sceneTex;?>')});
 
         //--------------------------------------SCENE LOADER------------------------------------
-        loader.load(sceneFile, function (object) {
-            $.each( object, function( key, value ) {
-                if(key == '__objectsAdded'){
-                    $.each( value, function( key2, value2 ) {
-                        value2.castShadow = true;
-                        value2.receiveShadow = true;
-                        value2.material = material;
-                    });
-                }
+        if(sceneFile != 'none'){
+            loader.load(sceneFile, function (object) {
+                $.each( object, function( key, value ) {
+                    if(key == '__objectsAdded'){
+                        $.each( value, function( key2, value2 ) {
+                            value2.castShadow = true;
+                            value2.receiveShadow = true;
+                            value2.material = material;
+                        });
+                    }
+                });
+                //add all the scene objects to the scene
+                scene.add(object);
             });
-            //add all the scene objects to the scene
-            scene.add(object);
-        });
+        }
         //-------------------------------------CUSTOMIZATION-------------------------------------
         <?php
         include 'static/components/lightCheck.comp';

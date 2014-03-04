@@ -1,4 +1,5 @@
 ### To-Do ###
+- Make a material class
 - GUI / HTML
 - Textual Data display
 - Scene Transitions
@@ -9,6 +10,10 @@
 - mod_rewrite
 - Everything else
 - more complex post processing (Gods Rays, lens flare, bokeh, etc.)
+
+### 0.0.4 ###
+- Added Fallback scene, 10x10x10 groundplane
+- Began building material class
 
 ### 0.0.3 ###
 - Ported to basic MVC framework
