@@ -1,10 +1,8 @@
 body,html{
 	margin-top:0;
-	width:100%;
-    height: 100%;
 }
 body{
-	margin:0 auto 20px auto;
+	margin:0;
 	font-size:14px;
     overflow: hidden;
 }
@@ -45,13 +43,14 @@ canvas {
 }
 
 #content{
-	float:center;
+	position:absolute;
+	top:0;
+	left:0;
 	max-height:400px;
 	overflow-y:scroll;
 	font-size:12px;
 	border:1px solid #ccc;
-    background: rgba(255,255,255,0.5);
-    visibility: hidden;
+    background: rgba(255,255,255,0.75);
 }
 
 #column{

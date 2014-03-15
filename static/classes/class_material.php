@@ -29,36 +29,39 @@ class material {
     var $matVisible;
     //'THREE.FrontSide', 'THREE.BackSide', 'THREE.DoubleSide'
     var $matSide;
-    //bool
-    var $matNeedsUpdate;
-    var $matVertexColors;
     var $matFog;
     
-    //------------------line Specific---------------------
+    var $matNeedsUpdate;
+    var $matVertexColors;
     var $matLineWidth;
+    var $matShading;
+    var $matWireFrame;
     var $matLineCap;
     var $matLineJoin;
-
-    //------------------linedash Specific---------------------
-    var $matLineWidth;
+    var $matLightMap;
+    var $matMap;
+    
+    var $matSpecularMap;
+    var $matReflectivity;
+    var $matRefractionRatio;
+    var $matSkinning;
+    var $matMorphTargets;
+    var $matCombine;
     var $matScale;
     var $matDashSize;
-    var $matGapSize
-
+    var $matGapSize;
+    var $matEnvMap;
+    var $matAmbient;
+    var $matEmissive;
+    var $matShininess;
+    var $matUniforms;
     function material() {
     }
-    function setmatName($name){
-            $this->$matName = $name;
-    }
-    function setmatOpacity($opac){
-            $this->$matOpacity = $opac;
-    }
-    function setmatTransparent($trans){
-            $this->$matTransparent = $trans;
-    }
-    function setmatVisible($visible){
-            $this->$matVisible = $visible;
-    }
+    
+/*    function setOption($varRoot,$newVal){
+        $mat{$varRoot} = $newVal;
+        return $mat{$varRoot};
+    }*/
 
 }
 ?>

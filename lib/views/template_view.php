@@ -1,7 +1,7 @@
 <?php 
 //include our settings
 initSettings();
-global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shaderIncludes, $canvasTarget, $renderMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $realtimeShadows_bit, $realtimeShadowSmooth, $linearfog_bit, $linearfogColor, $linearfogNear, $linearfogFar, $exponentialfog_bit, $exponentialfogColor, $exponentialfogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures;
+global $tpl_args;
 ?>
 <html>
 <head>
@@ -9,22 +9,22 @@ global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shade
     <meta name="description" content="this is the description"/>
     <?php 
         //--------------------SCRIPT INCLUDES ARRAY------------------------------------
-        foreach($scriptIncludes as $key => $script){
+        foreach($tpl_args['scriptIncludes'] as $key => $script){
             echo '<script type="text/javascript" src="' . $script . '" name="' . $key . '"></script>';
         }
 
         //--------------------DEPENDENCY CHECKS----------------------------------------
-        if($renderMode == 'ASCII'){
+        if($tpl_args['renderMode'] == 'ASCII'){
             echo '<script type="text/javascript" src="static/js/threejs/effects/AsciiEffect.js" name="ASCII"></script>';
         }
-        if($ao_bit == true){
+        if($tpl_args['ao_bit'] == true){
             echo '<script type="text/javascript" src="static/js/threejs/shaders/SSAOShader.js" name="ssaoShader"></script>';
         }
-        if($aa_bit == true){
+        if($tpl_args['aa_bit'] == true){
             echo '<script type="text/javascript" src="static/js/threejs/shaders/FXAAShader.js" name="fxaaShader"></script>';
         }
         //--------------------PIXEL SHADERS--------------------------------------------
-        if($usePixelShaders == true || $ao_bit == true || $aa_bit ==true){
+        if($tpl_args['usePixelShaders'] == true || $tpl_args['ao_bit'] == true || $tpl_args['aa_bit'] ==true){
             echo '
             <script src="static/js/threejs/postprocessing/EffectComposer.js"></script>
             <script src="static/js/threejs/postprocessing/RenderPass.js"></script>
@@ -35,11 +35,11 @@ global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shade
             ';   
         }
         //--------------------RENDER SHADERS--------------------------------------------
-        foreach($shaderIncludes as $key => $script){
+        foreach($tpl_args['shaderIncludes'] as $key => $script){
             echo '<script type="text/javascript" src="' . $script . '" name="' . $key . '"></script>';
         }
         //--------------------CONTROL MODE INCLUDES-------------------------------------
-        switch ($controlMode) {
+        switch ($tpl_args['controlMode']) {
             case 'OrbitControls':
                 echo '<script type="text/javascript" src="static/js/threejs/controls/OrbitControls.js" name="OrbitControls"></script>';
             break;
@@ -52,6 +52,11 @@ global $scriptIncludes, $controlMode, $ao_bit, $aa_bit, $usePixelShaders, $shade
             break;
             
         }
+
+        if($tpl_args['showStats']){
+            echo '<script type="text/javascript" src="static/js/threejs/debug/stats.min.js" name="Stats"></script>';
+        }
+        
 
     ?>
 </head>

@@ -1,12 +1,12 @@
 <?php 
-foreach ($lights as $key => $value) {
+foreach ($tpl_args['lights'] as $key => $value) {
 	switch ($value->lightMode) {
 		case 'directional':
 			echo '
 			mainlight = new THREE.DirectionalLight( ' . $value->lightColor .' );
 			mainlight.intensity = '. $value->lightIntensity . ';
 			';
-			if($realtimeShadows_bit == true){
+			if($tpl_args['realtimeShadows_bit'] == true){
 				echo'
 				mainlight.shadowCameraNear = 50;
 				mainlight.shadowCameraFar = 1000;
@@ -35,7 +35,7 @@ foreach ($lights as $key => $value) {
 			spotLight.position.set( 200, 1000, 150 );
 			spotLight.intensity='. $value->lightIntensity . ';
 			';
-			if($realtimeShadows_bit == true){
+			if($tpl_args['realtimeShadows_bit'] == true){
 				echo'
 				spotLight.castShadow = true;
 				spotLight.shadowMapWidth = 1024;

@@ -8,7 +8,8 @@
 </div>
 
 <body>
-    <div id="content">
+    <div id="content" <?php if(!$tpl_args['pageContent']){echo 'style="visibility:hidden;"';}?>>
+        <?php if($tpl_args['pageContent']){echo $tpl_args['pageContent'];}?>
     </div>
 </body>
 
@@ -21,27 +22,30 @@
         var d = new THREE.Vector3();
         var scene = new THREE.Scene();
         var loader = new THREE.ObjectLoader();
-        var camera = new THREE.PerspectiveCamera(<?php echo $cameraPerspective;?>, window.innerWidth / window.innerHeight, <?php echo $camNear . ', ' . $camFar ?>);
+        var camera = new THREE.PerspectiveCamera(<?php echo $tpl_args['cameraPerspective'];?>, window.innerWidth / window.innerHeight, <?php echo $tpl_args['camNear'] . ', ' . $tpl_args['camFar'] ?>);
         var clock = new THREE.Clock();
         var delta = 0.2;
         var WIDTH = window.innerWidth;
         var HEIGHT = window.innerHeight;
-        var container = $('<?php echo $canvasTarget;?>');
+        var container = $("<?php echo $tpl_args['canvasTarget'];?>");
         <?php 
+            //custom init javascript
+            if($tpl_args['customInits']){echo $tpl_args['customInits'];}
+            
             //Render mode toggler
-            if($renderMode == 'WebGL'){
+            if($tpl_args['renderMode'] == 'WebGL'){
                 echo '
                 var renderer = new THREE.WebGLRenderer({ antialias: true });
                 container.append(renderer.domElement);
                 renderer.setSize(WIDTH,HEIGHT);
                 ';
-            }elseif($renderMode == 'Canvas'){
+            }elseif($tpl_args['renderMode'] == 'Canvas'){
                 echo '
                 var renderer = new THREE.CanvasRenderer();
                 container.append(renderer.domElement);
                 renderer.setSize(WIDTH,HEIGHT);
                 ';
-            }elseif($renderMode == 'ASCII'){
+            }elseif($tpl_args['renderMode'] == 'ASCII'){
                 echo '
                 var renderer = new THREE.CanvasRenderer();
                 effect = new THREE.AsciiEffect( renderer );
@@ -52,12 +56,21 @@
             }
 
             //scene handling and fallback
-            if($sceneFile == 'default'){
+            if($tpl_args['sceneFile'] == 'default'){
                 echo 'var sceneFile = "static/scenes/Scene_Default.js"';
-            }elseif($sceneFile != ''){
-                echo 'var sceneFile = "' . $sceneFile . '";';
+            }elseif($tpl_args['sceneFile'] != ''){
+                echo 'var sceneFile = "' . $tpl_args['sceneFile'] . '";';
             }else{
                 echo 'var sceneFile = "none";';
+            }
+
+            if($tpl_args['showStats']){
+                echo 'var stats;
+                stats = new Stats();
+                stats.domElement.style.position = "absolute";
+                stats.domElement.style.top = "0px";
+                container.append( stats.domElement );
+                ';
             }
 
         ?>
@@ -72,7 +85,7 @@
         });
 
         //-------------------------------------MATERIALS-------------------------------------
-        var material = new THREE.MeshLambertMaterial({map: THREE.ImageUtils.loadTexture('<?php echo $sceneTex;?>')});
+        <?php include 'static/components/materialCheck.comp'; ?>
 
         //--------------------------------------SCENE LOADER------------------------------------
         if(sceneFile != 'none'){
@@ -82,7 +95,7 @@
                         $.each( value, function( key2, value2 ) {
                             value2.castShadow = true;
                             value2.receiveShadow = true;
-                            value2.material = material;
+                            value2.material = TreeTex;
                         });
                     }
                 });
@@ -95,12 +108,18 @@
         include 'static/components/lightCheck.comp';
         include 'static/components/shaderCheck.comp';
         include 'static/components/controlsCheck.comp';
-        if($useSkybox == true){include 'static/components/skyboxCheck.comp';}
-        if($linearfog_bit == true){echo 'scene.fog = new THREE.Fog( "' . $linearfogColor . '", ' . $linearfogNear . ', ' . $linearfogFar . ' );';}
-        if($exponentialfog_bit == true){echo 'scene.fog = new THREE.FogExp2( "' . $linearfogColor . '", ' . $exponentialfogDensity . ');';}
+        if($tpl_args['useSkybox'] == true){include 'static/components/skyboxCheck.comp';}
+        if($tpl_args['linearfog_bit'] == true){echo 'scene.fog = new THREE.Fog( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['linearfogNear'] . ', ' . $tpl_args['linearfogFar'] . ' );';}
+        if($tpl_args['exponentialfog_bit'] == true){echo 'scene.fog = new THREE.FogExp2( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['exponentialfogDensity'] . ');';}
+        if($tpl_args['customBody']){echo $tpl_args['customBody'];}
         ?>
         //init camera
-        camera.position = new THREE.Vector3(<?php echo $cameraPosition;?>);
+        camera.position = new THREE.Vector3(<?php echo $tpl_args['cameraPosition'];?>);
+        //------------------------------------ANIMATE FUNCTION------------------------------------
+        function animate() {
+            requestAnimationFrame(animate);
+        }
+
         //------------------------------------RENDER FUNCTION------------------------------------
         var render = function () {
 
@@ -108,20 +127,20 @@
 
             <?php 
                 //renderer type checks
-                if($renderMode == "ASCII"){
+                if($tpl_args['renderMode'] == "ASCII"){
                     echo 'effect.render( scene, camera );';
-                }elseif ($renderMode == "WebGL" && $usePixelShaders == true && $ao_bit == false){
-                    if($realtimeShadows_bit == true){
+                }elseif ($tpl_args['renderMode'] == "WebGL" && $tpl_args['usePixelShaders'] == true && $tpl_args['ao_bit'] == false){
+                    if($tpl_args['realtimeShadows_bit'] == true){
                         echo '
                         renderer.shadowMapEnabled = true;
-                        renderer.shadowMapType = THREE.' . $realtimeShadowSmooth . ';
+                        renderer.shadowMapType = THREE.' . $tpl_args['realtimeShadowSmooth'] . ';
                         renderer.render(scene, camera);
                         ';
                     }
                     echo '
                     composer.render(0.1);
                     ';
-                }elseif ($renderMode == "WebGL" && $usePixelShaders == true && $ao_bit == true){
+                }elseif ($tpl_args['renderMode'] == "WebGL" && $tpl_args['usePixelShaders'] == true && $tpl_args['ao_bit'] == true){
                     echo'
                     renderer.autoClear = false;
                     renderer.autoUpdateObjects = true;
@@ -132,7 +151,7 @@
                     depthPassPlugin.enabled = false;
                     composer.render( 0.1 );
                     ';
-                }elseif($renderMode == "WebGL" && $ao_bit == true){
+                }elseif($tpl_args['renderMode'] == "WebGL" && $tpl_args['ao_bit'] == true){
                     echo'
                     renderer.autoClear = false;
                     renderer.autoUpdateObjects = true;
@@ -144,10 +163,10 @@
                     composer.render( 0.1 );
                     ';
                 }else{
-                    if($realtimeShadows_bit == true){
+                    if($tpl_args['realtimeShadows_bit'] == true){
                         echo '
                         renderer.shadowMapEnabled = true;
-                        renderer.shadowMapType = THREE.' . $realtimeShadowSmooth . ';
+                        renderer.shadowMapType = THREE.' . $tpl_args['realtimeShadowSmooth'] . ';
                         ';
                     }
                     echo '
@@ -156,7 +175,7 @@
                 }
 
                 //controls update checks
-                switch ($controlMode) {
+                switch ($tpl_args['controlMode']) {
                     case 'OrbitControls':
                         echo 'controls.update();';
                     break;
@@ -172,6 +191,14 @@
                         ';
                     break;
                 }
+
+                if($tpl_args['showStats']){
+                    echo 'stats.update();';
+                }
+
+                //CUSTOM RENDER JAVASCRIPT
+                if($tpl_args['customRender']){echo $tpl_args['customRender'];}
+
             ?>
 
         };

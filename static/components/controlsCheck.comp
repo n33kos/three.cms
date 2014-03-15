@@ -1,5 +1,5 @@
 <?php 
-switch ($controlMode) {
+switch ($tpl_args['controlMode']) {
 	case 'OrbitControls':
 		  echo "
 		  controls = new THREE.OrbitControls( camera );

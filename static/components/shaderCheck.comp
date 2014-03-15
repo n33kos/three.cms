@@ -1,5 +1,5 @@
 <?php 
-if($usePixelShaders == true || $ao_bit == true || $aa_bit == true){
+if($tpl_args['usePixelShaders'] == true || $tpl_args['ao_bit'] == true || $tpl_args['aa_bit'] == true){
         echo '
                 renderPass = new THREE.RenderPass( scene, camera );
                 copyPass = new THREE.ShaderPass( THREE.CopyShader );
@@ -7,7 +7,7 @@ if($usePixelShaders == true || $ao_bit == true || $aa_bit == true){
                 composer.addPass( renderPass );
         ';
 }
-foreach($shaderIncludes as $key => $script){
+foreach($tpl_args['shaderIncludes'] as $key => $script){
         if($key == 'filmShader'){
                 echo'
                 filmPass = new THREE.ShaderPass( THREE.FilmShader );
@@ -161,14 +161,14 @@ foreach($shaderIncludes as $key => $script){
         }
 }
 
-if($aa_bit == true){
+if($tpl_args['aa_bit'] == true){
                 echo'
                 fxaaPass = new THREE.ShaderPass( THREE.FXAAShader );
                 fxaaPass.uniforms[ "resolution" ].value = new THREE.Vector2( 1 / window.innerWidth, 1 / window.innerHeight );
                 composer.addPass( fxaaPass );
                 ';
 }
-if($ao_bit == true){
+if($tpl_args['ao_bit'] == true){
         echo'
         var SCALE = 1;
         renderTargetParametersRGBA = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBAFormat };
@@ -192,7 +192,7 @@ if($ao_bit == true){
         renderer.addPrePlugin( depthPassPlugin );
         ';
 }
-if($usePixelShaders == true || $ao_bit == true || $aa_bit == true){
+if($tpl_args['usePixelShaders'] == true || $tpl_args['ao_bit'] == true || $tpl_args['aa_bit'] == true){
         echo '
                 composer.addPass( copyPass );
                 copyPass.renderToScreen = true;

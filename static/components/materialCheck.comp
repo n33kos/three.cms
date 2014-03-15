@@ -1,0 +1,27 @@
+<?php 
+	echo'
+		var defaultMaterial = new THREE.MeshLambertMaterial();
+		defaultMaterial.color = new THREE.Color( 0xAAAAAA );
+	';
+    foreach ($tpl_args['materials'] as $key => $value) {
+    	switch ($value->matType) {
+			case 'lambert':
+		        echo '
+		        var ' . $value->matName . ' = new THREE.MeshLambertMaterial();
+		        ';
+		        if($value->matMap){
+					echo
+					$value->matName . '.map = new THREE.ImageUtils.loadTexture("' . $value->matMap . '");
+					';
+			    }
+	        break;
+			case 'wire':
+		        echo '
+		        var ' . $value->matName . ' = new THREE.MeshBasicMaterial( { wireframe: true } );' .
+				$value->matName . '.color = new THREE.Color(' . $value->matColor . ');' .
+				$value->matName . '.linewidth = new THREE.Color(' . $value->matLineWidth . ');
+				';
+	        break;
+	    }
+    }
+?>

@@ -1,19 +1,29 @@
 ### To-Do ###
-- Make a material class
-- GUI / HTML
-- Textual Data display
+- In-scene html using CSS3D renderer
+- Loading Manager
 - Scene Transitions
+- Multiple Templates
+- Scene Editor
+- GUI
 - 'Smooth transition' Preset camera positions.
 - per component settings
-- Convert settings to sql tables
+- Create database hierarchy
+- Convert config file to sql tables
 - Admin panel
 - mod_rewrite
-- Everything else
+- Expand Components
 - more complex post processing (Gods Rays, lens flare, bokeh, etc.)
+- Everything else
 
 ### 0.0.4 ###
 - Added Fallback scene, 10x10x10 groundplane
-- Began building material class
+- Added a material class
+- Added a particle class
+- Added Materials component
+- Added Custom Javascript init, body, and render vars
+- Added html page content
+- Implemented togglable stats
+- Combined loose variables into tpl_args on model level
 
 ### 0.0.3 ###
 - Ported to basic MVC framework
