@@ -1,19 +1,22 @@
 ### To-Do ###
+- Scene Editor Template
+- Admin panel
+- mod_rewrite
 - In-scene html using CSS3D renderer
 - Loading Manager
 - Scene Transitions
-- Multiple Templates
-- Scene Editor
 - GUI
 - 'Smooth transition' Preset camera positions.
 - per component settings
-- Create database hierarchy
-- Convert config file to sql tables
-- Admin panel
-- mod_rewrite
 - Expand Components
 - more complex post processing (Gods Rays, lens flare, bokeh, etc.)
 - Everything else
+
+### 0.0.5 ###
+- Created pages schema
+- Created page class
+- Created database 
+- Model now pulls from database instead of config file.
 
 ### 0.0.4 ###
 - Added Fallback scene, 10x10x10 groundplane

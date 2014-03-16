@@ -1,5 +1,5 @@
 <?php 
-//include our settings
+//lets get thigns started
 initSettings();
 global $tpl_args;
 ?>
@@ -17,14 +17,14 @@ global $tpl_args;
         if($tpl_args['renderMode'] == 'ASCII'){
             echo '<script type="text/javascript" src="static/js/threejs/effects/AsciiEffect.js" name="ASCII"></script>';
         }
-        if($tpl_args['ao_bit'] == true){
+        if($tpl_args['ao_bit'] == 1){
             echo '<script type="text/javascript" src="static/js/threejs/shaders/SSAOShader.js" name="ssaoShader"></script>';
         }
-        if($tpl_args['aa_bit'] == true){
+        if($tpl_args['aa_bit'] == 1){
             echo '<script type="text/javascript" src="static/js/threejs/shaders/FXAAShader.js" name="fxaaShader"></script>';
         }
         //--------------------PIXEL SHADERS--------------------------------------------
-        if($tpl_args['usePixelShaders'] == true || $tpl_args['ao_bit'] == true || $tpl_args['aa_bit'] ==true){
+        if($tpl_args['usePixelShaders'] == 1 || $tpl_args['ao_bit'] == 1 || $tpl_args['aa_bit'] ==1){
             echo '
             <script src="static/js/threejs/postprocessing/EffectComposer.js"></script>
             <script src="static/js/threejs/postprocessing/RenderPass.js"></script>

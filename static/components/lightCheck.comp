@@ -6,7 +6,7 @@ foreach ($tpl_args['lights'] as $key => $value) {
 			mainlight = new THREE.DirectionalLight( ' . $value->lightColor .' );
 			mainlight.intensity = '. $value->lightIntensity . ';
 			';
-			if($tpl_args['realtimeShadows_bit'] == true){
+			if($tpl_args['realtimeShadows_bit'] == 1){
 				echo'
 				mainlight.shadowCameraNear = 50;
 				mainlight.shadowCameraFar = 1000;
@@ -35,7 +35,7 @@ foreach ($tpl_args['lights'] as $key => $value) {
 			spotLight.position.set( 200, 1000, 150 );
 			spotLight.intensity='. $value->lightIntensity . ';
 			';
-			if($tpl_args['realtimeShadows_bit'] == true){
+			if($tpl_args['realtimeShadows_bit'] == 1){
 				echo'
 				spotLight.castShadow = true;
 				spotLight.shadowMapWidth = 1024;

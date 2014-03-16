@@ -8,7 +8,7 @@
 </div>
 
 <body>
-    <div id="content" <?php if(!$tpl_args['pageContent']){echo 'style="visibility:hidden;"';}?>>
+    <div id="content" <?php if($tpl_args['pageContent']){echo 'style="visibility:hidden;"';}?>>
         <?php if($tpl_args['pageContent']){echo $tpl_args['pageContent'];}?>
     </div>
 </body>
@@ -30,7 +30,7 @@
         var container = $("<?php echo $tpl_args['canvasTarget'];?>");
         <?php 
             //custom init javascript
-            if($tpl_args['customInits']){echo $tpl_args['customInits'];}
+            if($tpl_args['customInits'] != ''){echo $tpl_args['customInits'];}
             
             //Render mode toggler
             if($tpl_args['renderMode'] == 'WebGL'){
@@ -108,10 +108,10 @@
         include 'static/components/lightCheck.comp';
         include 'static/components/shaderCheck.comp';
         include 'static/components/controlsCheck.comp';
-        if($tpl_args['useSkybox'] == true){include 'static/components/skyboxCheck.comp';}
-        if($tpl_args['linearfog_bit'] == true){echo 'scene.fog = new THREE.Fog( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['linearfogNear'] . ', ' . $tpl_args['linearfogFar'] . ' );';}
-        if($tpl_args['exponentialfog_bit'] == true){echo 'scene.fog = new THREE.FogExp2( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['exponentialfogDensity'] . ');';}
-        if($tpl_args['customBody']){echo $tpl_args['customBody'];}
+        if($tpl_args['useSkybox'] == 1){include 'static/components/skyboxCheck.comp';}
+        if($tpl_args['linearfog_bit'] == 1){echo 'scene.fog = new THREE.Fog( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['linearfogNear'] . ', ' . $tpl_args['linearfogFar'] . ' );';}
+        if($tpl_args['exponentialfog_bit'] == 1){echo 'scene.fog = new THREE.FogExp2( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['exponentialfogDensity'] . ');';}
+        if($tpl_args['customBody'] != ''){echo $tpl_args['customBody'];}
         ?>
         //init camera
         camera.position = new THREE.Vector3(<?php echo $tpl_args['cameraPosition'];?>);
@@ -129,8 +129,8 @@
                 //renderer type checks
                 if($tpl_args['renderMode'] == "ASCII"){
                     echo 'effect.render( scene, camera );';
-                }elseif ($tpl_args['renderMode'] == "WebGL" && $tpl_args['usePixelShaders'] == true && $tpl_args['ao_bit'] == false){
-                    if($tpl_args['realtimeShadows_bit'] == true){
+                }elseif ($tpl_args['renderMode'] == "WebGL" && $tpl_args['usePixelShaders'] == 1 && $tpl_args['ao_bit'] == 0){
+                    if($tpl_args['realtimeShadows_bit'] == 1){
                         echo '
                         renderer.shadowMapEnabled = true;
                         renderer.shadowMapType = THREE.' . $tpl_args['realtimeShadowSmooth'] . ';
@@ -140,7 +140,7 @@
                     echo '
                     composer.render(0.1);
                     ';
-                }elseif ($tpl_args['renderMode'] == "WebGL" && $tpl_args['usePixelShaders'] == true && $tpl_args['ao_bit'] == true){
+                }elseif ($tpl_args['renderMode'] == "WebGL" && $tpl_args['usePixelShaders'] == 1 && $tpl_args['ao_bit'] == 1){
                     echo'
                     renderer.autoClear = false;
                     renderer.autoUpdateObjects = true;
@@ -151,7 +151,7 @@
                     depthPassPlugin.enabled = false;
                     composer.render( 0.1 );
                     ';
-                }elseif($tpl_args['renderMode'] == "WebGL" && $tpl_args['ao_bit'] == true){
+                }elseif($tpl_args['renderMode'] == "WebGL" && $tpl_args['ao_bit'] == 1){
                     echo'
                     renderer.autoClear = false;
                     renderer.autoUpdateObjects = true;
@@ -163,7 +163,7 @@
                     composer.render( 0.1 );
                     ';
                 }else{
-                    if($tpl_args['realtimeShadows_bit'] == true){
+                    if($tpl_args['realtimeShadows_bit'] == 1){
                         echo '
                         renderer.shadowMapEnabled = true;
                         renderer.shadowMapType = THREE.' . $tpl_args['realtimeShadowSmooth'] . ';
@@ -197,7 +197,7 @@
                 }
 
                 //CUSTOM RENDER JAVASCRIPT
-                if($tpl_args['customRender']){echo $tpl_args['customRender'];}
+                if($tpl_args['customRender'] != ''){echo $tpl_args['customRender'];}
 
             ?>
 
