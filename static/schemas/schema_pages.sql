@@ -6,7 +6,6 @@ CREATE TABLE pages
   title           varchar(255) NOT NULL,
   summary         text NOT NULL,
   pagecontent     mediumtext NOT NULL,
-
   canvastarget varchar(255) NOT NULL,
   scriptincludes mediumtext NOT NULL,
   usepixelshaders int NOT NULL,

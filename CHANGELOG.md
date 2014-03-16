@@ -1,7 +1,8 @@
 ### To-Do ###
+- Debug errors on default template
 - Scene Editor Template
 - Admin panel
-- mod_rewrite
+- Tweak mod_rewrite rules
 - In-scene html using CSS3D renderer
 - Loading Manager
 - Scene Transitions
@@ -17,6 +18,7 @@
 - Created page class
 - Created database 
 - Model now pulls from database instead of config file.
+- Added basic mod_rewrite to handle controller/action/id (action and id may not be working properly)
 
 ### 0.0.4 ###
 - Added Fallback scene, 10x10x10 groundplane

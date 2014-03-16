@@ -10,10 +10,10 @@ class Model_threebasicdefault extends Model
 }
 
 
-function initSettings(){
+function initSettings($getID){
     
     global $tpl_args;
-    $tpl_args = getTable(1);
+    $tpl_args = getTable($getID);
     
 }
 
