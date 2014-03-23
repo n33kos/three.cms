@@ -1,8 +1,15 @@
 ### To-Do ###
+- Scene editor action
+	- Work out page selection (ID based or otherwise)
+	- Plug arrays and arrays of classes
+	- Create table update function
+- Admin Template
+	- landing page
+	- site-wide settings page
+	- 'pages' settings (perhaps this will be /editor on each page?)
+	- Media Upload / materials settings (hefty)
 - Debug errors on default template
-- Scene Editor Template
-- Admin panel
-- Tweak mod_rewrite rules
+- Scene Editor
 - In-scene html using CSS3D renderer
 - Loading Manager
 - Scene Transitions
@@ -13,12 +20,18 @@
 - more complex post processing (Gods Rays, lens flare, bokeh, etc.)
 - Everything else
 
+### 0.0.6 ###
+- Created admin template and controller
+- Tweaked mod_rewrite logic to support 1 param
+- Added Login Controller
+- Added Register Controller
+
 ### 0.0.5 ###
 - Created pages schema
 - Created page class
 - Created database 
 - Model now pulls from database instead of config file.
-- Added basic mod_rewrite to handle controller/action/id (action and id may not be working properly)
+- Added basic mod_rewrite to handle controller and action
 
 ### 0.0.4 ###
 - Added Fallback scene, 10x10x10 groundplane

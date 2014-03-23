@@ -1,1 +1,3 @@
-<?php include view_path . '/index.php'; ?>
+<?php 
+echo $body;
+?>

@@ -69,8 +69,10 @@ global $tpl_args;
     </div>
 
     <body>
-        <div id="content" style="<?php if($tpl_args['pageContent']){echo 'visibility:hidden;';} ?>">
-            <?php if($tpl_args['pageContent']){echo $tpl_args['pageContent'];}?>
+        <div id="content" style="<?php if(count($tpl_args['pageContent']) < 1 ){echo 'visibility:hidden;';} ?>">
+            <?php 
+            if($tpl_args['pageContent']){echo $tpl_args['pageContent'];}
+            ?>
         </div>
     </body>
 

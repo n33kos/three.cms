@@ -4,11 +4,10 @@ class Controller_Static extends Controller
 {
 	function __construct()
 	{
-		//$this->allowed_actions[] = 'default_action';
-                $this->allowed_actions[] = 'home';
+		$this->allowed_actions = array('index');
 	}
 
-	function home()
+	function index()
 	{
 	}
 }

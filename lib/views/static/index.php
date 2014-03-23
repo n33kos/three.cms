@@ -1,5 +1,5 @@
 <head>
-<title>Editor</title>
+<title>Static</title>
 </head>
 <div id="menu">
 </div>
@@ -9,7 +9,7 @@
 
 <body>
     <div id="content" >
-        THIS IS THE EDITOR TEMPLATE!
+		This is the static page template
     </div>
 </body>
 

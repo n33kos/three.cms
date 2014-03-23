@@ -88,7 +88,8 @@ function &get_model($name)
 			return $_model_instances[$name];
 		}
 	}
-	return null;
+	$tempnull = null;
+	return $tempnull;
 }
 
 function show_view($___filename, $data)
@@ -105,7 +106,12 @@ function show_view($___filename, $data)
 function run_page($page_name)
 {
 	$page_name_split = explode('/', $page_name);
-	$controller_name = 'Controller_' . $page_name_split[0];
+	//set the default controller if none selected
+	if(strlen(controller) > 0){
+		$controller_name = 'Controller_' . $page_name_split[0];
+	}else{
+		$controller_name = 'Controller_static';
+	}
 	$controller = new $controller_name();
 
 	// if ajax we don't want to render outer template
@@ -115,16 +121,16 @@ function run_page($page_name)
 	else
 		$use_main_template = true;
 
-        // if the page string given to us doesn't have a name, use default page
+    // if the page string given to us doesn't have a name, use default page
 	if ((count($page_name_split) == 1) || ($page_name_split[1] == ''))
-		$action_name = 'default_action';
+		$action_name = 'index';
 	else
 		$action_name = $page_name_split[1];
 
-        // make sure the action method exists
+    // make sure the action method exists
 	if (!in_array($action_name, $controller->allowed_actions)) die('Action ' . $action_name . ' not found in controller ' . $controller_name . '.');
 
-        // if parameters exist (eg controller/action/lol/lol/lol, get them
+    // if parameters exist (eg controller/action/lol/lol/lol, get them
 	if (count($page_name_split) > 2)
 		$params = array_slice($page_name_split, 2);
 	else
@@ -133,7 +139,7 @@ function run_page($page_name)
 	$view_array = array();
         $controller->view_array = &$view_array;
         $controller->params = &$params;
-	$controller->$action_name();
+		$controller->$action_name();
         $controller->view_array['base_path'] = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR;
 
 
