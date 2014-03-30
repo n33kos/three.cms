@@ -110,7 +110,7 @@ function run_page($page_name)
 	if(strlen(controller) > 0){
 		$controller_name = 'Controller_' . $page_name_split[0];
 	}else{
-		$controller_name = 'Controller_static';
+		$controller_name = 'Controller_threebasicdefault';
 	}
 	$controller = new $controller_name();
 

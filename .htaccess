@@ -1,5 +1,6 @@
 RewriteEngine On    # Turn on the rewriting engine
 
+RewriteRule    ^([0-9]+)?$    index.php?param=$1   [L]
 RewriteRule    ^([0-9a-zA-Z_]+)/([0-9a-zA-Z_]+)/([0-9a-zA-Z_]+)?$ index.php?controller=$1&action=$2&param=$3    [L]
 RewriteRule    ^([0-9a-zA-Z_]+)/([0-9a-zA-Z_]+)?$ index.php?controller=$1&action=$2    [L]
 RewriteRule    ^([0-9a-zA-Z_]+)?$    index.php?controller=$1   [L]

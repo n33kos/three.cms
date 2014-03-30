@@ -1,6 +1,6 @@
 <?php 
 //pass the page ID to initSettings
-initSettings(1);
+initSettings(param);
 global $tpl_args;
 
 ?>
@@ -36,8 +36,12 @@ global $tpl_args;
                 ';   
             }
             //--------------------RENDER SHADERS--------------------------------------------
-            foreach($tpl_args['shaderIncludes'] as $key => $script){
-                echo '<script type="text/javascript" src="' . $script . '" name="' . $key . '"></script>';
+            foreach($tpl_args['shaderIncludes'] as $key => $value){
+                foreach($value as $key2 => $value2){
+                    if($value2){
+                        echo '<script type="text/javascript" src="' . $value2 . '" name="' . $key2 . '"></script>';
+                    }
+                }
             }
             //--------------------CONTROL MODE INCLUDES-------------------------------------
             switch ($tpl_args['controlMode']) {
@@ -158,7 +162,7 @@ global $tpl_args;
                             $.each( value, function( key2, value2 ) {
                                 value2.castShadow = true;
                                 value2.receiveShadow = true;
-                                value2.material = TreeTex;
+                                value2.material = defaultMaterial;
                             });
                         }
                     });
@@ -172,8 +176,8 @@ global $tpl_args;
             include 'static/components/shaderCheck.comp';
             include 'static/components/controlsCheck.comp';
             if($tpl_args['useSkybox'] == 1){include 'static/components/skyboxCheck.comp';}
-            if($tpl_args['linearfog_bit'] == 1){echo 'scene.fog = new THREE.Fog( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['linearfogNear'] . ', ' . $tpl_args['linearfogFar'] . ' );';}
-            if($tpl_args['exponentialfog_bit'] == 1){echo 'scene.fog = new THREE.FogExp2( "' . $tpl_args['linearfogColor'] . '", ' . $tpl_args['exponentialfogDensity'] . ');';}
+            if($tpl_args['linearFog_bit'] == 1){echo 'scene.fog = new THREE.Fog( "' . $tpl_args['linearFogColor'] . '", ' . $tpl_args['linearFogNear'] . ', ' . $tpl_args['linearFogFar'] . ' );';}
+            if($tpl_args['exponentialFog_bit'] == 1){echo 'scene.fog = new THREE.FogExp2( "' . $tpl_args['linearFogColor'] . '", ' . $tpl_args['exponentialFogDensity'] . ');';}
             if($tpl_args['customBody'] != ''){echo $tpl_args['customBody'];}
             ?>
             //init camera

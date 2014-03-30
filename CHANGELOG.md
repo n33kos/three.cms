@@ -1,24 +1,33 @@
 ### To-Do ###
-- Scene editor action
-	- Work out page selection (ID based or otherwise)
-	- Plug arrays and arrays of classes
-	- Create table update function
 - Admin Template
 	- landing page
-	- site-wide settings page
-	- 'pages' settings (perhaps this will be /editor on each page?)
-	- Media Upload / materials settings (hefty)
-- Debug errors on default template
-- Scene Editor
-- In-scene html using CSS3D renderer
-- Loading Manager
-- Scene Transitions
-- GUI
-- 'Smooth transition' Preset camera positions.
-- per component settings
-- Expand Components
-- more complex post processing (Gods Rays, lens flare, bokeh, etc.)
+	- site-specific settings page
+	- Page management/overview
+		- Update createPage() to reflect POST extraction on updatePage().
+	- Media Upload (hefty)
+	- Menu/Navigation system
+	- GUI
+- Threebasicdefault Template
+	- Debug errors on default template
+	- In-scene html using CSS3D renderer
+	- GUI implementation
+	- Integrated Scene Exporter on editor action
+	- Loading Manager
+	- Scene Transitions
+	- more complex post processing (Gods Rays, lens flare, bokeh, etc.)
+- Components
+	- Better component structure (database?)
+	- per component settings
+	- 'Smooth transition' Preset camera positions.
+- System
+	- Better mod_rewrite rules
 - Everything else
+
+### 0.0.7 ###
+- Fixed fog bug
+- threebasicdefault/editor is now functioning
+- Created scriptincludes class
+- Editor defaults to page id 1 but takes params (/threebasicdefault/editor/12)
 
 ### 0.0.6 ###
 - Created admin template and controller

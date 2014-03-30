@@ -3,9 +3,12 @@
 require 'lib/main.php';
 
 //define our controller/action based on mod_rewrite rules
-define('controller', $_GET['controller']);
-define('action', $_GET['action']);
+define('controller', (isset($_GET['controller']) ? $_GET['controller'] : 'threebasicdefault'));
+define('action', (isset($_GET['action']) ? $_GET['action'] : 'index'));
+define('param', (isset($_GET['param']) ? $_GET['param'] : 1));
 
-run_page(controller .'/'. action);
+
+run_page(controller .'/'. action .'/'. param);
+
 
 ?>

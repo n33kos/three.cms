@@ -31,12 +31,12 @@ context.fillStyle = "rgb( 200, 200, 200 )";
 context.fillRect( 0, 0, texture_placeholder.width, texture_placeholder.height );
 
 var materials = [
-	loadTexture( "' . $tpl_args['skyboxTextures']['right'] . '" ), // right
-	loadTexture( "' . $tpl_args['skyboxTextures']['left'] . '" ), // left
-	loadTexture( "' . $tpl_args['skyboxTextures']['top'] . '" ), // top
-	loadTexture( "' . $tpl_args['skyboxTextures']['bottom'] . '" ), // bottom
-	loadTexture( "' . $tpl_args['skyboxTextures']['back'] . '" ), // back
-	loadTexture( "' . $tpl_args['skyboxTextures']['front'] . '" )  // front
+	loadTexture( "' . $tpl_args['skyboxTextures']->right . '" ), // right
+	loadTexture( "' . $tpl_args['skyboxTextures']->left . '" ), // left
+	loadTexture( "' . $tpl_args['skyboxTextures']->top . '" ), // top
+	loadTexture( "' . $tpl_args['skyboxTextures']->bottom . '" ), // bottom
+	loadTexture( "' . $tpl_args['skyboxTextures']->back . '" ), // back
+	loadTexture( "' . $tpl_args['skyboxTextures']->front . '" )  // front
 ];
 
 mesh = new THREE.Mesh( new THREE.CubeGeometry( ' . $tpl_args['skyboxScale'] . ', ' . $tpl_args['skyboxScale'] . ', ' . $tpl_args['skyboxScale'] . ', 7, 7, 7 ), new THREE.MeshFaceMaterial( materials ) );
