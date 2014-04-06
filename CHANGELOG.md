@@ -1,15 +1,13 @@
 ### To-Do ###
-- Admin Template
-	- landing page
-	- site-specific settings page
-	- Page management/overview
-		- Update createPage() to reflect POST extraction on updatePage().
+- Admin Panel
+	- site-specific settings
+	- Page Viewer
 	- Media Upload (hefty)
 	- Menu/Navigation system
 	- GUI
 - Threebasicdefault Template
-	- Debug errors on default template
 	- In-scene html using CSS3D renderer
+	- animation
 	- GUI implementation
 	- Integrated Scene Exporter on editor action
 	- Loading Manager
@@ -21,13 +19,29 @@
 	- 'Smooth transition' Preset camera positions.
 - System
 	- Better mod_rewrite rules
+	- Complete schemas for all tables
+	- Dynamic table creation/'installation'?
 - Everything else
+
+### 0.0.8 ###
+- Moved editor action to admin controller as page_editor
+- Fixed a bug in the threebasicdefault template
+- Created 'page_creator' action on admin controller
+- Created 'page_deleter' action on admin controller
+- Created rudimentary dashboard admin page.
+- Update createPage() to reflect POST extraction on updatePage().
+- Corrected bug which caused rendershaders to not function.
+- Linked SceneTex to scene object.
+
 
 ### 0.0.7 ###
 - Fixed fog bug
 - threebasicdefault/editor is now functioning
 - Created scriptincludes class
+- Created skybox class
 - Editor defaults to page id 1 but takes params (/threebasicdefault/editor/12)
+- Set threebasicdefault as the default template
+- Set mod_rewrite rules to inperpret numeric params on homepage
 
 ### 0.0.6 ###
 - Created admin template and controller
@@ -44,8 +58,8 @@
 
 ### 0.0.4 ###
 - Added Fallback scene, 10x10x10 groundplane
-- Added a material class
-- Added a particle class
+- Added material class
+- Added particle class
 - Added Materials component
 - Added Custom Javascript init, body, and render vars
 - Added html page content

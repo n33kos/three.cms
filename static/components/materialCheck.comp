@@ -3,6 +3,12 @@
 		var defaultMaterial = new THREE.MeshLambertMaterial();
 		defaultMaterial.color = new THREE.Color( 0xAAAAAA );
 	';
+	if($tpl_args['sceneTex'] != ''){
+		echo'
+			var SceneTex = new THREE.MeshLambertMaterial();
+			SceneTex.map = new THREE.ImageUtils.loadTexture("' . $tpl_args['sceneTex'] . '");
+		';
+	}
     foreach ($tpl_args['materials'] as $key => $value) {
     	switch ($value->matType) {
 			case 'lambert':

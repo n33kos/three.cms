@@ -6,7 +6,7 @@ global $tpl_args;
 ?>
 <html>
     <head>
-        <title>Title</title>
+        <title><?php echo $tpl_args['title'];?></title>
         <meta name="description" content="this is the description"/>
         <?php 
             //--------------------SCRIPT INCLUDES ARRAY------------------------------------
@@ -37,11 +37,9 @@ global $tpl_args;
             }
             //--------------------RENDER SHADERS--------------------------------------------
             foreach($tpl_args['shaderIncludes'] as $key => $value){
-                foreach($value as $key2 => $value2){
-                    if($value2){
-                        echo '<script type="text/javascript" src="' . $value2 . '" name="' . $key2 . '"></script>';
+                    if($value != ''){
+                        echo '<script type="text/javascript" src="' . $value . '" name="' . $key . '"></script>';
                     }
-                }
             }
             //--------------------CONTROL MODE INCLUDES-------------------------------------
             switch ($tpl_args['controlMode']) {
@@ -124,7 +122,7 @@ global $tpl_args;
 
                 //scene handling and fallback
                 if($tpl_args['sceneFile'] == 'default'){
-                    echo 'var sceneFile = "static/scenes/Scene_Default.js"';
+                    echo 'var sceneFile = "static/scenes/Scene_Default.js";';
                 }elseif($tpl_args['sceneFile'] != ''){
                     echo 'var sceneFile = "' . $tpl_args['sceneFile'] . '";';
                 }else{
@@ -162,7 +160,12 @@ global $tpl_args;
                             $.each( value, function( key2, value2 ) {
                                 value2.castShadow = true;
                                 value2.receiveShadow = true;
-                                value2.material = defaultMaterial;
+                                if(SceneTex){
+                                    value2.material = SceneTex;
+                                }else{                                    
+                                    value2.material = defaultMaterial;
+                                }
+
                             });
                         }
                     });

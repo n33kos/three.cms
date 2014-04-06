@@ -9,9 +9,9 @@ $mysqli = new mysqli(mysql_server, mysql_username, mysql_password, mysql_databas
 
 sec_session_start(); 
 if(login_check($mysqli) == true) {
-        $loggedIn = true;
+    $loggedIn = true;
 } else { 
-        $loggedIn = false;
+    $loggedIn = false;
 }
 
 ?>
@@ -20,11 +20,11 @@ if(login_check($mysqli) == true) {
     </head>
     <body>
         <?php if($loggedIn): ?>
-            <p>You are logged in!</p>
             <hr>
+            <h1>Page Creator</h1>
             <?php
                 if(count($_POST) > 0 && $_GET['success'] != 1 && $_GET['error'] != 1){
-                    updatePage($mysqli,param);
+                    createPage($mysqli);
                 }
             ?>
             <hr>
@@ -82,7 +82,10 @@ if(login_check($mysqli) == true) {
                 <input type="submit" value="Submit">
             </form>
         <?php else: ?>
-            <P>You must be logged in to view this page</p>
+            <?php 
+                header("Location: ../");
+                exit;
+            ?>
         <?php endif; ?>
     </body>
 

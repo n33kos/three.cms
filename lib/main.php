@@ -121,11 +121,15 @@ function run_page($page_name)
 	else
 		$use_main_template = true;
 
-    // if the page string given to us doesn't have a name, use default page
-	if ((count($page_name_split) == 1) || ($page_name_split[1] == ''))
+    if(strtolower($controller_name) == 'controller_admin'){
+    	// If the controller is the admin page, we route all pages through the index action
 		$action_name = 'index';
-	else
+	}elseif((count($page_name_split) == 1) || ($page_name_split[1] == '')){
+    	// if the page string given to us doesn't have a name, use default page
+		$action_name = 'index';
+	}else{
 		$action_name = $page_name_split[1];
+	}
 
     // make sure the action method exists
 	if (!in_array($action_name, $controller->allowed_actions)) die('Action ' . $action_name . ' not found in controller ' . $controller_name . '.');

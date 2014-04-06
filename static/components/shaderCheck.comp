@@ -7,165 +7,161 @@ if($tpl_args['usePixelShaders'] == 1 || $tpl_args['ao_bit'] == 1 || $tpl_args['a
                 composer.addPass( renderPass );
         ';
 }
-                
-                        
-foreach($tpl_args['shaderIncludes'] as $key => $value){
-        foreach($value as $key2 => $value2){
-                if($value2){
-                        if($key2 == 'filmShader'){
-                                echo'
-                                filmPass = new THREE.ShaderPass( THREE.FilmShader );
-                                filmPass.uniforms[ "sCount" ].value = 1000;
-                                filmPass.uniforms[ "sIntensity" ].value = 0.9;
-                                filmPass.uniforms[ "nIntensity" ].value = 0.4;
-                				//filmPass.uniforms[ "time" ].value = 0.0;
-                				filmPass.uniforms[ "grayscale" ].value = 0;		
-                                composer.addPass( filmPass );
-                                ';
-                        }
-                        if($key2 == 'bleachBypassShader'){
-                                echo'
-                                bleachPass = new THREE.ShaderPass( THREE.BleachBypassShader );
-                                bleachPass.uniforms[ "opacity" ].value = 3.0;
-                                composer.addPass( bleachPass );
-                                ';
-                        }
-                        if($key2 == 'colorifyShader'){
-                                echo'
-                                colorifyPass = new THREE.ShaderPass( THREE.ColorifyShader );
-                                colorifyPass.uniforms[ "color" ].value = new THREE.Color( 0xff0000 );
-                                composer.addPass( colorifyPass );
-                                ';
-                        }
-                        if($key2 == 'dotScreenShader'){
-                                echo'
-                                dotScreenPass = new THREE.ShaderPass( THREE.DotScreenShader );
-                				dotScreenPass.uniforms[ "tSize" ].value = new THREE.Vector2( 128, 128 );
-                				dotScreenPass.uniforms[ "center" ].value = new THREE.Vector2( 0.25, 0.25 );
-                				dotScreenPass.uniforms[ "angle" ].value = 2;
-                				dotScreenPass.uniforms[ "scale" ].value = 2;
-                                composer.addPass( dotScreenPass );
-                                ';
-                        }
-                        if($key2 == 'brightnessContrastShader'){
-                                echo'
-                                brightnessContrastPass = new THREE.ShaderPass( THREE.BrightnessContrastShader );
-                                brightnessContrastPass.uniforms[ "contrast" ].value = 0.8;
-                				brightnessContrastPass.uniforms[ "brightness" ].value = 0;
-                                composer.addPass( brightnessContrastPass );
-                                ';
-                        }
-                        if($key2 == 'colorCorrectionShader'){
-                                echo'
-                                colorCorrectionPass = new THREE.ShaderPass( THREE.ColorCorrectionShader );
-                				colorCorrectionPass.uniforms[ "powRGB" ].value = new THREE.Vector3( 1.5, 2, 1.5 );
-                				colorCorrectionPass.uniforms[ "mulRGB" ].value = new THREE.Vector3( 1, 1, 1 );
-                                composer.addPass( colorCorrectionPass );
-                                ';
-                        }
-                        if($key2 == 'focusShader'){
-                                echo'
-                                focusPass = new THREE.ShaderPass( THREE.FocusShader );
-                				//focusPass.uniforms[ "screenWidth" ].value = 1024;
-                				//focusPass.uniforms[ "screenHeight" ].value = 1024;
-                				focusPass.uniforms[ "sampleDistance" ].value = 0.94;
-                				focusPass.uniforms[ "waveFactor" ].value = 0.00125;
-                                composer.addPass( focusPass );
-                                ';
-                        }
-                        if($key2 == 'horizontalBlurShader'){
-                                echo'
-                                horizontalBlurPass = new THREE.ShaderPass( THREE.HorizontalBlurShader );
-                				focusPass.uniforms[ "h" ].value = 1.0 / 512.0;
-                                composer.addPass( horizontalBlurPass );
-                                ';
-                        }
-                        if($key2 == 'verticalBlurShader'){
-                                echo'
-                                verticalBlurPass = new THREE.ShaderPass( THREE.VerticalBlurShader );
-                				focusPass.uniforms[ "v" ].value = 1.0 / 512.0;
-                                composer.addPass( verticalBlurPass );
-                                ';
-                        }
-                        if($key2 == 'verticalTiltShiftShader'){
-                                echo'
-                                verticalTiltShiftPass = new THREE.ShaderPass( THREE.VerticalTiltShiftShader );
-                				verticalTiltShiftPass.uniforms[ "v" ].value = 1.0 / 512.0;
-                				verticalTiltShiftPass.uniforms[ "r" ].value = 0.35;
-                                composer.addPass( verticalTiltShiftPass );
-                                ';
-                        }
-                        if($key2 == 'hueSaturationShader'){
-                                echo'
-                                hueSaturationPass = new THREE.ShaderPass( THREE.HueSaturationShader );
-                                hueSaturationPass.uniforms[ "hue" ].value = 0.5;
-                                hueSaturationPass.uniforms[ "saturation" ].value = .5;
-                                composer.addPass( hueSaturationPass );
-                                ';
-                        }
-                        if($key2 == 'kaleidoShader'){
-                                echo'
-                                kaleidoPass = new THREE.ShaderPass( THREE.KaleidoShader );
-                				kaleidoPass.uniforms[ "sides" ].value = 10.0;
-                				kaleidoPass.uniforms[ "angle" ].value = 0.0;
-                                composer.addPass( kaleidoPass );
-                                ';
-                        }
-                        if($key2 == 'luminosityShader'){
-                                echo'
-                                luminosityPass = new THREE.ShaderPass( THREE.LuminosityShader );
-                                composer.addPass( luminosityPass );
-                                ';
-                        }
-                        if($key2 == 'mirrorShader'){
-                                echo'
-                                mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
-                				mirrorPass.uniforms[ "side" ].value = 1;
-                                composer.addPass( mirrorPass );
-                                ';
-                        }
-                        if($key2 == 'rgbShiftShader'){
-                                echo'
-                                RGBShiftPass = new THREE.ShaderPass( THREE.RGBShiftShader );
-                				RGBShiftPass.uniforms[ "amount" ].value = 0.005;
-                				RGBShiftPass.uniforms[ "angle" ].value = 0.0;
-                                composer.addPass( RGBShiftPass );
-                                ';
-                        }
-                        if($key2 == 'sepiaShader'){
-                                echo'
-                                sepiaPass = new THREE.ShaderPass( THREE.SepiaShader );
-                				sepiaPass.uniforms[ "amount" ].value = 1.0;
-                                composer.addPass( sepiaPass );
-                                ';
-                        }
-                        if($key2 == 'vignetteShader'){
-                                echo'
-                                vignettePass = new THREE.ShaderPass( THREE.VignetteShader );
-                                vignettePass.uniforms[ "darkness" ].value = 1.5;
-                				vignettePass.uniforms[ "offset" ].value = 1.0;
-                                composer.addPass( vignettePass );
-                                ';
-                        }
-                        if($key2 == 'edgeDetectionFreiChenShader'){
-                                echo'
-                                edgeEffect = new THREE.ShaderPass( THREE.EdgeShader );
-                                edgeEffect.uniforms[ "aspect" ].value.x = window.innerWidth;
-                                edgeEffect.uniforms[ "aspect" ].value.y = window.innerHeight;
-                                composer.addPass( edgeEffect );
-                                ';
-                        }
-                        if($key2 == 'edgeDetectionSobelShader'){
-                                echo'
-                                edgeEffect2 = new THREE.ShaderPass( THREE.EdgeShader2 );
-                                edgeEffect2.uniforms[ "aspect" ].value.x = window.innerWidth;
-                                edgeEffect2.uniforms[ "aspect" ].value.y = window.innerHeight;
-                                composer.addPass( edgeEffect2 );
-                                ';
-                        }
-                }
-        }
+
+//------------------------Start Shaders---------------------------------------
+if($tpl_args['shaderIncludes']->filmShader != ''){
+        echo'
+        filmPass = new THREE.ShaderPass( THREE.FilmShader );
+        filmPass.uniforms[ "sCount" ].value = 1000;
+        filmPass.uniforms[ "sIntensity" ].value = 0.9;
+        filmPass.uniforms[ "nIntensity" ].value = 0.4;
+			//filmPass.uniforms[ "time" ].value = 0.0;
+			filmPass.uniforms[ "grayscale" ].value = 0;		
+        composer.addPass( filmPass );
+        ';
 }
+if($tpl_args['shaderIncludes']->bleachBypassShader != ''){
+        echo'
+        bleachPass = new THREE.ShaderPass( THREE.BleachBypassShader );
+        bleachPass.uniforms[ "opacity" ].value = 3.0;
+        composer.addPass( bleachPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->colorifyShader != ''){
+        echo'
+        colorifyPass = new THREE.ShaderPass( THREE.ColorifyShader );
+        colorifyPass.uniforms[ "color" ].value = new THREE.Color( 0xff0000 );
+        composer.addPass( colorifyPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->dotScreenShader != ''){
+        echo'
+        dotScreenPass = new THREE.ShaderPass( THREE.DotScreenShader );
+			dotScreenPass.uniforms[ "tSize" ].value = new THREE.Vector2( 128, 128 );
+			dotScreenPass.uniforms[ "center" ].value = new THREE.Vector2( 0.25, 0.25 );
+			dotScreenPass.uniforms[ "angle" ].value = 2;
+			dotScreenPass.uniforms[ "scale" ].value = 2;
+        composer.addPass( dotScreenPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->brightnessContrastShader != ''){
+        echo'
+        brightnessContrastPass = new THREE.ShaderPass( THREE.BrightnessContrastShader );
+        brightnessContrastPass.uniforms[ "contrast" ].value = 0.8;
+			brightnessContrastPass.uniforms[ "brightness" ].value = 0;
+        composer.addPass( brightnessContrastPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->colorCorrectionShader != ''){
+        echo'
+        colorCorrectionPass = new THREE.ShaderPass( THREE.ColorCorrectionShader );
+			colorCorrectionPass.uniforms[ "powRGB" ].value = new THREE.Vector3( 1.5, 2, 1.5 );
+			colorCorrectionPass.uniforms[ "mulRGB" ].value = new THREE.Vector3( 1, 1, 1 );
+        composer.addPass( colorCorrectionPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->focusShader != ''){
+        echo'
+        focusPass = new THREE.ShaderPass( THREE.FocusShader );
+			//focusPass.uniforms[ "screenWidth" ].value = 1024;
+			//focusPass.uniforms[ "screenHeight" ].value = 1024;
+			focusPass.uniforms[ "sampleDistance" ].value = 0.94;
+			focusPass.uniforms[ "waveFactor" ].value = 0.00125;
+        composer.addPass( focusPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->horizontalBlurShader != ''){
+        echo'
+        horizontalBlurPass = new THREE.ShaderPass( THREE.HorizontalBlurShader );
+			focusPass.uniforms[ "h" ].value = 1.0 / 512.0;
+        composer.addPass( horizontalBlurPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->verticalBlurShader != ''){
+        echo'
+        verticalBlurPass = new THREE.ShaderPass( THREE.VerticalBlurShader );
+			focusPass.uniforms[ "v" ].value = 1.0 / 512.0;
+        composer.addPass( verticalBlurPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->verticalTiltShiftShader != ''){
+        echo'
+        verticalTiltShiftPass = new THREE.ShaderPass( THREE.VerticalTiltShiftShader );
+			verticalTiltShiftPass.uniforms[ "v" ].value = 1.0 / 512.0;
+			verticalTiltShiftPass.uniforms[ "r" ].value = 0.35;
+        composer.addPass( verticalTiltShiftPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->hueSaturationShader != ''){
+        echo'
+        hueSaturationPass = new THREE.ShaderPass( THREE.HueSaturationShader );
+        hueSaturationPass.uniforms[ "hue" ].value = 0.5;
+        hueSaturationPass.uniforms[ "saturation" ].value = .5;
+        composer.addPass( hueSaturationPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->kaleidoShader != ''){
+        echo'
+        kaleidoPass = new THREE.ShaderPass( THREE.KaleidoShader );
+			kaleidoPass.uniforms[ "sides" ].value = 10.0;
+			kaleidoPass.uniforms[ "angle" ].value = 0.0;
+        composer.addPass( kaleidoPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->luminosityShader != ''){
+        echo'
+        luminosityPass = new THREE.ShaderPass( THREE.LuminosityShader );
+        composer.addPass( luminosityPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->mirrorShader != ''){
+        echo'
+        mirrorPass = new THREE.ShaderPass( THREE.MirrorShader );
+			mirrorPass.uniforms[ "side" ].value = 1;
+        composer.addPass( mirrorPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->rgbShiftShader != ''){
+        echo'
+        RGBShiftPass = new THREE.ShaderPass( THREE.RGBShiftShader );
+			RGBShiftPass.uniforms[ "amount" ].value = 0.005;
+			RGBShiftPass.uniforms[ "angle" ].value = 0.0;
+        composer.addPass( RGBShiftPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->sepiaShader != ''){
+        echo'
+        sepiaPass = new THREE.ShaderPass( THREE.SepiaShader );
+			sepiaPass.uniforms[ "amount" ].value = 1.0;
+        composer.addPass( sepiaPass );
+        ';
+}
+if($tpl_args['shaderIncludes']->vignetteShader != ''){
+        echo'
+        vignettePass = new THREE.ShaderPass( THREE.VignetteShader );
+        vignettePass.uniforms[ "darkness" ].value = 1.5;
+			vignettePass.uniforms[ "offset" ].value = 1.0;
+        composer.addPass( vignettePass );
+        ';
+}
+if($tpl_args['shaderIncludes']->edgeDetectionFreiChenShader != ''){
+        echo'
+        edgeEffect = new THREE.ShaderPass( THREE.EdgeShader );
+        edgeEffect.uniforms[ "aspect" ].value.x = window.innerWidth;
+        edgeEffect.uniforms[ "aspect" ].value.y = window.innerHeight;
+        composer.addPass( edgeEffect );
+        ';
+}
+if($tpl_args['shaderIncludes']->edgeDetectionSobelShader != ''){
+        echo'
+        edgeEffect2 = new THREE.ShaderPass( THREE.EdgeShader2 );
+        edgeEffect2.uniforms[ "aspect" ].value.x = window.innerWidth;
+        edgeEffect2.uniforms[ "aspect" ].value.y = window.innerHeight;
+        composer.addPass( edgeEffect2 );
+        ';
+}
+
+//------------------------End Shaders---------------------------------------
 
 if($tpl_args['aa_bit'] == 1){
                 echo'
