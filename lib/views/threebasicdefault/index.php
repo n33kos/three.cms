@@ -1,6 +1,6 @@
 <?php 
-//pass the page ID to initSettings
-initSettings(param);
+//pass the page ID to initData
+initData(param);
 global $tpl_args;
 
 ?>
@@ -53,7 +53,6 @@ global $tpl_args;
                     echo '<script type="text/javascript" src="static/js/threejs/controls/PointerLockControls.js" name="PointerLock"></script>';
                     echo '<link rel="stylesheet" type="text/css" href="static/css/PointerLock.css">';
                 break;
-                
             }
 
             if($tpl_args['showStats']){
@@ -142,7 +141,11 @@ global $tpl_args;
 
             //-------------------------------------WINDOW RESIZE-------------------------------------
             window.addEventListener('resize', function () {
-                effect.setSize( WIDTH, HEIGHT );
+                <?php 
+                    if($tpl_args['renderMode'] == 'ASCII'){
+                        echo 'effect.setSize( WIDTH, HEIGHT );';
+                    }
+                ?>
                 renderer.setSize(WIDTH, HEIGHT);
 
                 camera.aspect = WIDTH / HEIGHT;

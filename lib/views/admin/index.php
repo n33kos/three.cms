@@ -31,10 +31,14 @@ if (login_check($mysqli) == true) {
                     <li><a href="admin/page_creator/1">Page Creator</a></li>
                     <li><a href="admin/page_deleter/0">Page Deleter</a></li>
                 </ul>
-                <h3>Site Settings</h3>
+                <h3>Users</h3>
                 <ul>
-                    <li><a href="#">Something</a></li>
-                    <li><a href="#">Something Else</a></li>
+                    <li><a href="register">Create New User</a></li>
+                </ul>
+                <h3>Configuration</h3>
+                <ul>
+                    <li><a href="admin/site_settings">Site Settings</a></li>
+                    <li><a href="admin/resource_manager">Resource Manager</a></li>
                 </ul>
         </body>
     </html>
@@ -53,7 +57,7 @@ if (login_check($mysqli) == true) {
                 echo '<p class="error">Error Logging In!</p>';
             }
             ?> 
-            <form action="process_login" method="post" name="login_form">                      
+            <form action="admin/process_login" method="post" name="login_form">                      
                 Email: <input type="text" name="email" />
                 Password: <input type="password" 
                                  name="password" 
@@ -62,8 +66,7 @@ if (login_check($mysqli) == true) {
                        value="Login" 
                        onclick="formhash(this.form, this.form.password);" /> 
             </form>
-            <p>If you don't have a login, please <a href="register">register</a></p>
-            <p>If you are done, please <a href="logout">log out</a>.</p>
+            <p>If you are done, please <a href="admin/logout">log out</a>.</p>
             <p>You are currently logged <?php echo $logged ?>.</p>
         </body>
     </html>

@@ -10,8 +10,63 @@ class admin extends Model
 }
 function initSettings($getID){
     
+    global $tpl_settings;
+    $tpl_settings = getSettings();
+    
+}
+function initData($getID){
+    
     global $tpl_args;
     $tpl_args = getTable($getID);
+
+}
+function getSettings(){
+    // Connects to your Database 
+    mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
+    mysql_select_db(mysql_database) or die(mysql_error()); 
+    $data = mysql_query("SELECT * FROM site_settings WHERE id = 1") 
+    or die(mysql_error());
+    //grab those vars
+    $info = mysql_fetch_array($data);
+
+    $tpl_settings['sitetitle'] = $info['sitetitle'];
+    $tpl_settings['siteurl'] = $info['siteurl'];
+    $tpl_settings['admincontact'] = $info['admincontact'];
+    $tpl_settings['timezone'] = $info['timezone'];
+    $tpl_settings['robotsbit'] = $info['robotsbit'];
+    $tpl_settings['homecontroller'] = $info['homecontroller'];
+
+    return $tpl_settings;
+}
+function setSettings($mysqli){
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Get POST Variables----------------------------------*/
+    /*-------------------------------------------------------------------------------*/
+    $theID = 1;
+    $sitetitle = filter_input(INPUT_POST, 'sitetitle', FILTER_SANITIZE_STRING);
+    $siteurl = filter_input(INPUT_POST, 'siteurl', FILTER_SANITIZE_STRING);
+    $admincontact = filter_input(INPUT_POST, 'admincontact', FILTER_SANITIZE_STRING);
+    $timezone = filter_input(INPUT_POST, 'timezone', FILTER_SANITIZE_STRING);
+    $robotsbit = filter_input(INPUT_POST, 'robotsbit', FILTER_SANITIZE_STRING);
+    $homecontroller = filter_input(INPUT_POST, 'homecontroller', FILTER_SANITIZE_STRING);
+
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Prep Then execute Statement-------------------------*/
+    /*-------------------------------------------------------------------------------*/
+    $prep_stmt = "UPDATE site_settings SET sitetitle=?, siteurl=?, admincontact=?, timezone=?, robotsbit=?, homecontroller=? WHERE id=?";
+    $update_stmt = $mysqli->prepare($prep_stmt);
+    $update_stmt->bind_param( "ssssisi", $sitetitle, $siteurl, $admincontact, $timezone, $robotsbit, $homecontroller, $theID);
+    
+    // Execute the prepared query.
+    if (!$update_stmt->execute()) {
+        header('Location: ?error=1');
+        echo "Execute failed: (" . $update_stmt->errno . ") " . $update_stmt->error;
+        print('ERROR!');
+    }else{
+        $update_stmt->close();
+        header('Location: ?success=1');
+        print('SUCCESS!');
+    }
     
 }
 function getTable($pageID){
@@ -149,7 +204,7 @@ function createPage($mysqli){
     $publicationDate = date('Y-m-d');
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $summary = filter_input(INPUT_POST, 'summary', FILTER_SANITIZE_STRING);
-    $pageContent = filter_input(INPUT_POST, 'pageContent', FILTER_SANITIZE_STRING);
+    $pageContent = filter_input(INPUT_POST, 'pageContent', FILTER_UNSAFE_RAW);
     $canvasTarget = filter_input(INPUT_POST, 'canvasTarget', FILTER_SANITIZE_STRING);
     $usePixelShaders = filter_input(INPUT_POST, 'usePixelShaders', FILTER_SANITIZE_STRING);
     
@@ -280,9 +335,9 @@ function createPage($mysqli){
     }
     $skyboxTextures = serialize($skyboxSetup);
 
-    $customInits =     filter_input(INPUT_POST, 'customInits', FILTER_SANITIZE_STRING);
-    $customBody =     filter_input(INPUT_POST, 'customBody', FILTER_SANITIZE_STRING);
-    $customRender =     filter_input(INPUT_POST, 'customRender', FILTER_SANITIZE_STRING);
+    $customInits =     filter_input(INPUT_POST, 'customInits', FILTER_UNSAFE_RAW);
+    $customBody =     filter_input(INPUT_POST, 'customBody', FILTER_UNSAFE_RAW);
+    $customRender =     filter_input(INPUT_POST, 'customRender', FILTER_UNSAFE_RAW);
 
     /*-------------------------------------------------------------------------------*/
     /*---------------------------Prep Then execute Statement-------------------------*/
@@ -312,7 +367,7 @@ function updatePage($mysqli, $theID){
     $publicationDate = date('Y-m-d');
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     $summary = filter_input(INPUT_POST, 'summary', FILTER_SANITIZE_STRING);
-    $pageContent = filter_input(INPUT_POST, 'pageContent', FILTER_SANITIZE_STRING);
+    $pageContent = filter_input(INPUT_POST, 'pageContent', FILTER_UNSAFE_RAW);
     $canvasTarget = filter_input(INPUT_POST, 'canvasTarget', FILTER_SANITIZE_STRING);
     $usePixelShaders = filter_input(INPUT_POST, 'usePixelShaders', FILTER_SANITIZE_STRING);
     
@@ -443,9 +498,9 @@ function updatePage($mysqli, $theID){
     }
     $skyboxTextures = serialize($skyboxSetup);
 
-    $customInits =     filter_input(INPUT_POST, 'customInits', FILTER_SANITIZE_STRING);
-    $customBody =     filter_input(INPUT_POST, 'customBody', FILTER_SANITIZE_STRING);
-    $customRender =     filter_input(INPUT_POST, 'customRender', FILTER_SANITIZE_STRING);
+    $customInits =     filter_input(INPUT_POST, 'customInits', FILTER_UNSAFE_RAW);
+    $customBody =     filter_input(INPUT_POST, 'customBody', FILTER_UNSAFE_RAW);
+    $customRender =     filter_input(INPUT_POST, 'customRender', FILTER_UNSAFE_RAW);
 
 
     /*-------------------------------------------------------------------------------*/

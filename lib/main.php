@@ -1,7 +1,6 @@
 <?php
 
-// Configuration
-date_default_timezone_set('Australia/Sydney');
+// Hardcoded Configuration
 define('mysql_server', 'localhost');
 define('mysql_username', 'root');
 define('mysql_password', 'root');
@@ -10,6 +9,22 @@ define('mysql_table_prefix', '');
 
 // This is the view template which is used to surround each page.
 define('template_view', dirname(__FILE__) . '/views/template_view.php');
+
+//Get site-wide settings
+include_once 'static/functions/function_site_settings.php';
+global $tpl_settings;
+$tpl_settings = siteSettings();
+
+//set site-wide settings
+define('siteTitle', $tpl_settings['sitetitle']);
+define('baseURL', $tpl_settings['siteurl']);
+define('robotsBit', $tpl_settings['robotsbit']);
+define('adminContact', $tpl_settings['admincontact']);
+define('homeController', $tpl_settings['homecontroller']);
+if($tpl_settings['timezone'] != ''){
+	date_default_timezone_set($tpl_settings['timezone']);
+}
+
 // End Configuration
 
 $mysql_link;
@@ -110,7 +125,7 @@ function run_page($page_name)
 	if(strlen(controller) > 0){
 		$controller_name = 'Controller_' . $page_name_split[0];
 	}else{
-		$controller_name = 'Controller_threebasicdefault';
+		$controller_name = 'Controller_' . homeController;
 	}
 	$controller = new $controller_name();
 

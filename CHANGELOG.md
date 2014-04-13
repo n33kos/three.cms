@@ -1,8 +1,11 @@
 ### To-Do ###
 - Admin Panel
-	- site-specific settings
-	- Page Viewer
-	- Media Upload (hefty)
+	- Component Manager
+		- GameObject Component
+		- Better component structure (database?)
+		- per component settings
+		- 'Smooth transition' component - Preset camera positions.
+	- Page Viewer/Manager
 	- Menu/Navigation system
 	- GUI
 - Threebasicdefault Template
@@ -13,15 +16,24 @@
 	- Loading Manager
 	- Scene Transitions
 	- more complex post processing (Gods Rays, lens flare, bokeh, etc.)
-- Components
-	- Better component structure (database?)
-	- per component settings
-	- 'Smooth transition' Preset camera positions.
 - System
 	- Better mod_rewrite rules
-	- Complete schemas for all tables
+	- Create many functions
 	- Dynamic table creation/'installation'?
 - Everything else
+
+### 0.0.9 ###
+- Fixed window resize console error.
+- PageContent HTML fields now save and output properly.
+- Javascript fields now save and output properly.
+- Register controller now requires admin permission.
+- Updated schemas.
+- Created site_settings page, controller, and table.
+- Defined constants for site settings.
+- Added resource_manager action to admin controller.
+	- Added file type toggling to resource manager.
+	- Added file upload to resource manager.
+	- Added file removal to resource manager.
 
 ### 0.0.8 ###
 - Moved editor action to admin controller as page_editor
@@ -32,7 +44,6 @@
 - Update createPage() to reflect POST extraction on updatePage().
 - Corrected bug which caused rendershaders to not function.
 - Linked SceneTex to scene object.
-
 
 ### 0.0.7 ###
 - Fixed fog bug

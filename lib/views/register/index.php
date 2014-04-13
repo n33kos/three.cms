@@ -1,18 +1,31 @@
 <?php 
 include_once 'register.inc.php';
 include_once 'static/functions/function_users.php';
+$mysqli = new mysqli(mysql_server, mysql_username, mysql_password, mysql_database);
+
+sec_session_start();
+
+if (login_check($mysqli) == true) {
+    $logged = 'in';
+    $loggedIn = true;
+} else {
+    $logged = 'out';
+    $loggedIn = false;
+}
+
 ?>
+<?php if($loggedIn): ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Secure Login: Registration Form</title>
+        <title>Create New User</title>
         <script type="text/JavaScript" src="static/js/sha512.js"></script> 
         <script type="text/JavaScript" src="static/js/forms.js"></script>
         <link rel="stylesheet" href="static/css/register.css" />
     </head>
     <body>
-        <h1>Register with us</h1>
+        <h1>Create New User</h1>
         <?php
         if (!empty($error_msg)) {
             echo $error_msg;
@@ -55,3 +68,9 @@ include_once 'static/functions/function_users.php';
         <p>Return to the <a href="admin">login page</a>.</p>
     </body>
 </html>
+<?php else: ?>
+    <?php 
+        header("Location: admin");
+     exit;
+    ?>
+<?php endif; ?>

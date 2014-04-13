@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Secure Login: Registration Success</title>
+        <title>Create New User</title>
         <link rel="stylesheet" href="static/css/register.css" />
     </head>
     <body>

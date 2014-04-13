@@ -12,11 +12,16 @@ class Model_threebasicdefault extends Model
 
 function initSettings($getID){
     
-    global $tpl_args;
-    $tpl_args = getTable($getID);
+    global $tpl_settings;
+    $tpl_settings = getSettings();
     
 }
+function initData($getID){
+    
+    global $tpl_args;
+    $tpl_args = getTable($getID);
 
+}
 
 function getTable($pageID){
     require_once 'static/classes/class_light.php';

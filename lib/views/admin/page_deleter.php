@@ -1,7 +1,7 @@
 <?php 
 
 //pass the page ID to initSettings
-initSettings(param);
+initData(param);
 global $tpl_args;
 
 include_once 'static/functions/function_users.php';
@@ -62,22 +62,31 @@ if(login_check($mysqli) == true) {
                                     }elseif(sizeof($value1) > 1 || is_object($value1)){
                                         echo '<fieldset>';
                                         foreach ($value1 as $key2 => $value2){
-                                            echo '<input type="text" title= "' . $key2 . '" name="' . $key2 . $subIteration . '" placeholder= "' . $key2 . '" value="' . $value2 . '" >';
+                                            echo '<input type="text" title= "' . $key2 . '" name="' . $key2 . $subIteration . '" placeholder= "' . $key2 . '" value="' . htmlentities($value2) . '" >';
                                         }
                                         $subIteration++;
                                         echo '</fieldset>';
                                     }else{
-                                        echo '<input type="text" title= "' . $key1 . '" name="' . $key1 . '" placeholder= "' . $key1 . '" value="' . $value1 . '" ' . $isDisabled . ' >';
+                                        echo '<input type="text" title= "' . $key1 . '" name="' . $key1 . '" placeholder= "' . $key1 . '" value="' . htmlentities($value1) . '" ' . $isDisabled . ' >';
                                     }
 
                             }
                             echo '</fieldset>';
                             echo '</div>';
                         }else{
-                            echo '<div>';
-                                echo '<label>' . $key . ':</label><br>';
-                                echo '<input type="text" title= "' . $key . '" name="' . $key . '" placeholder= "' . $key . '" value="' . $value . '" ' . $isDisabled . ' >';
-                            echo '</div>';
+                            if($key == 'customInits' || $key == 'customBody' || $key == 'customRender' || $key == 'pageContent'){
+                                echo '<div>';
+                                    echo '<label>' . $key . ':</label><br>';
+                                    echo '<textarea rows="4" cols="50" title= "' . $key . '" name="' . $key . '" ' . $isDisabled . '>';
+                                    echo htmlentities($value);
+                                    echo '</textarea>';
+                                echo '</div>';
+                            }else{
+                                echo '<div>';
+                                    echo '<label>' . $key . ':</label><br>';
+                                    echo '<input type="text" title= "' . $key . '" name="' . $key . '" placeholder= "' . $key . '" value="' . htmlentities($value) . '" ' . $isDisabled . ' >';
+                                echo '</div>';
+                            }
                         }
 
                     } 
