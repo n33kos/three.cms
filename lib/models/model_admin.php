@@ -20,6 +20,142 @@ function initData($getID){
     $tpl_args = getTable($getID);
 
 }
+function initComponent($getID){
+
+    global $comp_args;
+    $comp_args = getComponent($getID);
+
+}
+function getComponents(){
+    // Connects to your Database 
+    mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
+    mysql_select_db(mysql_database) or die(mysql_error()); 
+    $data = mysql_query("SELECT id, slug, component_type FROM components ORDER BY slug DESC LIMIT 20") 
+    or die(mysql_error());
+    //grab those vars
+    global $comp_args;
+    while($info = mysql_fetch_assoc($data)){
+        $comp_args[] = $info;
+    }
+    
+    return;
+}
+function deleteComponent($mysqli,$theID){
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Prep Then execute Statement-------------------------*/
+    /*-------------------------------------------------------------------------------*/
+    $prep_stmt = "DELETE FROM components WHERE id=?";
+    $delete_stmt = $mysqli->prepare($prep_stmt);
+    $delete_stmt->bind_param( "i", $theID);
+    
+    // Execute the prepared query.
+    if (!$delete_stmt->execute()) {
+        header('Location: ?error=1');
+        echo "Execute failed: (" . $delete_stmt->errno . ") " . $delete_stmt->error;
+        print('ERROR!');
+    }else{
+        $delete_stmt->close();
+        $pageLocation = 'Location: ' . baseURL . '/admin';
+        header($pageLocation);
+        print('SUCCESS!');
+    }
+}
+function updateComponent($mysqli,$theID){
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Get POST Variables----------------------------------*/
+    /*-------------------------------------------------------------------------------*/
+    $slug = filter_input(INPUT_POST, 'slug', FILTER_SANITIZE_STRING);
+    $component_type = filter_input(INPUT_POST, 'component_type', FILTER_SANITIZE_STRING);
+    $position = filter_input(INPUT_POST, 'position', FILTER_SANITIZE_STRING);
+    $rotation = filter_input(INPUT_POST, 'rotation', FILTER_SANITIZE_STRING);
+    $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_STRING);
+    $mesh = filter_input(INPUT_POST, 'mesh', FILTER_SANITIZE_STRING);
+    $material = filter_input(INPUT_POST, 'material', FILTER_SANITIZE_STRING);
+    $init_script = filter_input(INPUT_POST, 'init_script', FILTER_UNSAFE_RAW);
+    $main_script = filter_input(INPUT_POST, 'main_script', FILTER_UNSAFE_RAW);
+    $render_script = filter_input(INPUT_POST, 'render_script', FILTER_UNSAFE_RAW);
+    $animation_script = filter_input(INPUT_POST, 'animation_script', FILTER_UNSAFE_RAW);
+
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Prep Then execute Statement-------------------------*/
+    /*-------------------------------------------------------------------------------*/
+
+    $prep_stmt = "UPDATE components SET slug=?, component_type=?, position=?, rotation=?, scale=?, mesh=?, material=?, init_script=?, main_script=?, render_script=?, animation_script=? WHERE id=?";
+    $update_stmt = $mysqli->prepare($prep_stmt);
+    $update_stmt->bind_param( "sssssssssssi", $slug, $component_type, $position, $rotation, $scale, $mesh, $material, $init_script, $main_script, $render_script, $animation_script, $theID);
+    
+    // Execute the prepared query.
+    if (!$update_stmt->execute()) {
+        header('Location: ?error=1');
+        echo "Execute failed: (" . $update_stmt->errno . ") " . $update_stmt->error;
+        print('ERROR!');
+    }else{
+        $update_stmt->close();
+        header('Location: ?success=1');
+        print('SUCCESS!');
+    }
+}
+function createComponent($mysqli){
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Get POST Variables----------------------------------*/
+    /*-------------------------------------------------------------------------------*/
+    $theID = 0;
+
+    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_STRING);
+    $slug = filter_input(INPUT_POST, 'slug', FILTER_SANITIZE_STRING);
+    $component_type = filter_input(INPUT_POST, 'component_type', FILTER_SANITIZE_STRING);
+    $position = filter_input(INPUT_POST, 'position', FILTER_SANITIZE_STRING);
+    $rotation = filter_input(INPUT_POST, 'rotation', FILTER_SANITIZE_STRING);
+    $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_STRING);
+    $mesh = filter_input(INPUT_POST, 'mesh', FILTER_SANITIZE_STRING);
+    $material = filter_input(INPUT_POST, 'material', FILTER_SANITIZE_STRING);
+    $init_script = filter_input(INPUT_POST, 'init_script', FILTER_SANITIZE_STRING);
+    $main_script = filter_input(INPUT_POST, 'main_script', FILTER_SANITIZE_STRING);
+    $render_script = filter_input(INPUT_POST, 'render_script', FILTER_SANITIZE_STRING);
+    $animation_script = filter_input(INPUT_POST, 'animation_script', FILTER_SANITIZE_STRING);
+
+    /*-------------------------------------------------------------------------------*/
+    /*---------------------------Prep Then execute Statement-------------------------*/
+    /*-------------------------------------------------------------------------------*/
+    $prep_stmt = "INSERT INTO components (id, slug, component_type, position, rotation, scale, mesh, material, init_script, main_script, render_script, animation_script) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $update_stmt = $mysqli->prepare($prep_stmt);
+    $update_stmt->bind_param( "isssssssssss", $id, $slug, $component_type, $position, $rotation, $scale, $mesh, $material, $init_script, $main_script, $render_script, $animation_script);
+    
+    // Execute the prepared query.
+    if (!$update_stmt->execute()) {
+        header('Location: ?error=1');
+        echo "Execute failed: (" . $update_stmt->errno . ") " . $update_stmt->error;
+        print('ERROR!');
+    }else{
+        $update_stmt->close();
+        header('Location: ?success=1');
+        print('SUCCESS!');
+    }
+}
+function getComponent($compID){
+    // Connects to your Database 
+    mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
+    mysql_select_db(mysql_database) or die(mysql_error()); 
+    $data = mysql_query("SELECT * FROM components WHERE id = $compID") 
+    or die(mysql_error());
+    //grab those vars
+    $info = mysql_fetch_array($data);
+
+    $comp_args['id'] = $info['id'];
+    $comp_args['slug'] = $info['slug'];
+    $comp_args['component_type'] = $info['component_type'];
+    $comp_args['position'] = $info['position'];
+    $comp_args['rotation'] = $info['rotation'];
+    $comp_args['scale'] = $info['scale'];
+    $comp_args['mesh'] = $info['mesh'];
+    $comp_args['material'] = $info['material'];
+    $comp_args['init_script'] = $info['init_script'];
+    $comp_args['main_script'] = $info['main_script'];
+    $comp_args['render_script'] = $info['render_script'];
+    $comp_args['animation_script'] = $info['animation_script'];
+
+    return $comp_args;
+}
 function getSettings(){
     // Connects to your Database 
     mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
@@ -68,6 +204,21 @@ function setSettings($mysqli){
         print('SUCCESS!');
     }
     
+}
+function getPages(){
+    // Connects to your Database 
+    mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
+    mysql_select_db(mysql_database) or die(mysql_error()); 
+    $data = mysql_query("SELECT id, title, publicationDate, summary FROM pages ORDER BY publicationDate DESC LIMIT 20") 
+    or die(mysql_error());
+    //grab those vars
+    global $tpl_args;
+    while($info = mysql_fetch_assoc($data)){
+        $tpl_args[] = $info;
+    }
+    
+
+    return;
 }
 function getTable($pageID){
     require_once 'static/classes/class_light.php';
@@ -192,6 +343,7 @@ function getTable($pageID){
     $tpl_args['customBody'] = $info['custombody'];
     $tpl_args['customRender'] = $info['customrender'];
     $tpl_args['pageContent'] = $info['pagecontent'];
+    $tpl_args['components'] = $info['components'];
     return $tpl_args;
 }
 
@@ -339,12 +491,14 @@ function createPage($mysqli){
     $customBody =     filter_input(INPUT_POST, 'customBody', FILTER_UNSAFE_RAW);
     $customRender =     filter_input(INPUT_POST, 'customRender', FILTER_UNSAFE_RAW);
 
+    $components = filter_input(INPUT_POST, 'components', FILTER_SANITIZE_STRING);
+
     /*-------------------------------------------------------------------------------*/
     /*---------------------------Prep Then execute Statement-------------------------*/
     /*-------------------------------------------------------------------------------*/
-    $prep_stmt = "INSERT INTO pages (id, publicationDate, title, summary, pagecontent, canvastarget, scriptincludes, usepixelshaders, shaderincludes, showstats, rendermode, aobit, aabit, controlmode, cameraposition, cameraperspective, camnear, camfar, lights, materials, realtimeshadowsbit, realtimeshadowsmooth, linearfogbit, linearfogcolor, linearfognear, linearfogfar, exponentialfogbit, exponentialfogcolor, exponentialfogdensity, scenefile, scenetex, useskybox, skyboxscale, skyboxtextures, custominits, custombody, customrender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $prep_stmt = "INSERT INTO pages (id, publicationDate, title, summary, pagecontent, canvastarget, scriptincludes, usepixelshaders, shaderincludes, showstats, rendermode, aobit, aabit, controlmode, cameraposition, cameraperspective, camnear, camfar, lights, materials, realtimeshadowsbit, realtimeshadowsmooth, linearfogbit, linearfogcolor, linearfognear, linearfogfar, exponentialfogbit, exponentialfogcolor, exponentialfogdensity, scenefile, scenetex, useskybox, skyboxscale, skyboxtextures, custominits, custombody, customrender, components) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $insert_stmt = $mysqli->prepare($prep_stmt);
-    $insert_stmt->bind_param( "issssssisisiisssssssisisssissssisssss", $theID, $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender);
+    $insert_stmt->bind_param( "issssssisisiisssssssisisssissssissssss", $theID, $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $components);
     
     // Execute the prepared query.
     if (!$insert_stmt->execute()) {
@@ -501,15 +655,16 @@ function updatePage($mysqli, $theID){
     $customInits =     filter_input(INPUT_POST, 'customInits', FILTER_UNSAFE_RAW);
     $customBody =     filter_input(INPUT_POST, 'customBody', FILTER_UNSAFE_RAW);
     $customRender =     filter_input(INPUT_POST, 'customRender', FILTER_UNSAFE_RAW);
-
+    
+    $components = filter_input(INPUT_POST, 'components', FILTER_SANITIZE_STRING);
 
     /*-------------------------------------------------------------------------------*/
     /*---------------------------Prep Then execute Statement-------------------------*/
     /*-------------------------------------------------------------------------------*/
 
-    $prep_stmt = "UPDATE pages SET publicationDate=?, title=?, summary=?, pagecontent=?, canvastarget=?, scriptincludes=?, usepixelshaders=?, shaderincludes=?, showstats=?, rendermode=?, aobit=?, aabit=?, controlmode=?, cameraposition=?, cameraperspective=?, camnear=?, camfar=?, lights=?, materials=?, realtimeshadowsbit=?, realtimeshadowsmooth=?, linearfogbit=?, linearfogcolor=?, linearfognear=?, linearfogfar=?, exponentialfogbit=?, exponentialfogcolor=?, exponentialfogdensity=?, scenefile=?, scenetex=?, useskybox=?, skyboxscale=?, skyboxtextures=?, custominits=?, custombody=?, customrender=? WHERE id=?";
+    $prep_stmt = "UPDATE pages SET publicationDate=?, title=?, summary=?, pagecontent=?, canvastarget=?, scriptincludes=?, usepixelshaders=?, shaderincludes=?, showstats=?, rendermode=?, aobit=?, aabit=?, controlmode=?, cameraposition=?, cameraperspective=?, camnear=?, camfar=?, lights=?, materials=?, realtimeshadowsbit=?, realtimeshadowsmooth=?, linearfogbit=?, linearfogcolor=?, linearfognear=?, linearfogfar=?, exponentialfogbit=?, exponentialfogcolor=?, exponentialfogdensity=?, scenefile=?, scenetex=?, useskybox=?, skyboxscale=?, skyboxtextures=?, custominits=?, custombody=?, customrender=?, components=? WHERE id=?";
     $update_stmt = $mysqli->prepare($prep_stmt);
-    $update_stmt->bind_param( "ssssssisisiisssssssisisssissssisssssi", $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $theID);
+    $update_stmt->bind_param( "ssssssisisiisssssssisisssissssissssssi", $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $components, $theID);
     
     // Execute the prepared query.
     if (!$update_stmt->execute()) {

@@ -22,7 +22,30 @@ function initData($getID){
     $tpl_args = getTable($getID);
 
 }
+function getComponentBySlug($compSlug){
+    // Connects to your Database 
+    mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
+    mysql_select_db(mysql_database) or die(mysql_error()); 
+    $data = mysql_query("SELECT * FROM components WHERE slug = '$compSlug'")
+    or die(mysql_error());
+    //grab those vars
+    $info = mysql_fetch_array($data);
 
+    $comp_args['id'] = $info['id'];
+    $comp_args['slug'] = $info['slug'];
+    $comp_args['component_type'] = $info['component_type'];
+    $comp_args['position'] = $info['position'];
+    $comp_args['rotation'] = $info['rotation'];
+    $comp_args['scale'] = $info['scale'];
+    $comp_args['mesh'] = $info['mesh'];
+    $comp_args['material'] = $info['material'];
+    $comp_args['init_script'] = $info['init_script'];
+    $comp_args['main_script'] = $info['main_script'];
+    $comp_args['render_script'] = $info['render_script'];
+    $comp_args['animation_script'] = $info['animation_script'];
+
+    return $comp_args;
+}
 function getTable($pageID){
     require_once 'static/classes/class_light.php';
     require_once 'static/classes/class_material.php';
@@ -146,6 +169,7 @@ function getTable($pageID){
     $tpl_args['customBody'] = $info['custombody'];
     $tpl_args['customRender'] = $info['customrender'];
     $tpl_args['pageContent'] = $info['pagecontent'];
+    $tpl_args['components'] = $info['components'];
     return $tpl_args;
 }
 

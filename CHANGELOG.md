@@ -1,26 +1,62 @@
 ### To-Do ###
 - Admin Panel
-	- Component Manager
-		- GameObject Component
-		- Better component structure (database?)
-		- per component settings
-		- 'Smooth transition' component - Preset camera positions.
-	- Page Viewer/Manager
-	- Menu/Navigation system
-	- GUI
+	- Settings Page
+		- Add "Set Home Page ID" setting
+		- update schema
+	- Menu/Navigation Manager
+		Table Structure:
+			-id NOT UNIQUE - use this id to associate multiple menu item rows with a single menu name
+			-Menu Name - Should be the same for all menu items with the same ID
+			-Item Name
+			-Item URL
+			- update schema
+	- Components
+		- Add functions field
+		- Create schema for components
+		- Integrate with existing .comp files.
+		- update schema
+	-Styles and Design
+		- Back-End syntax highlighting
+		- Design layouts
+		- Implement Markup
+		- Implement Styles
+		- Implement Jacasript
 - Threebasicdefault Template
-	- In-scene html using CSS3D renderer
-	- animation
-	- GUI implementation
-	- Integrated Scene Exporter on editor action
+	- Add background color field
+	- Animation
+		-Add 'Enable Animation' bit.
+		-Add Animation custom script textarea
+		-Update schema
 	- Loading Manager
 	- Scene Transitions
 	- more complex post processing (Gods Rays, lens flare, bokeh, etc.)
+	- GUI
+	- update schema
 - System
-	- Better mod_rewrite rules
-	- Create many functions
-	- Dynamic table creation/'installation'?
-- Everything else
+	- Display pages by title slug OR id (requires site settings option)
+	- Mod_Rewrite Upgrades
+	- Extract Functions from code into files
+	- Review Model -> Action relationship.
+
+### Wishlist ####
+- Integrated Scene Exporter
+- In-scene web using CSS3D renderer
+- Animation Manager
+- Script Manager
+- GUI Manager
+- Easy Install
+
+### Bugs ###
+- Second component in array/list not coming through. Maybe SQL query is bad.
+- After creating things you get logged out
+
+### 0.0.10 ###
+- Added components page to admin controller
+- Adjusted mod_rewrite rules to default non-numeric params to '1'
+- Added page_manager view to admin controller
+- Added Component manager, editor, and creator views
+- Added components table.
+- Integrated components array in threebasicdefault view.
 
 ### 0.0.9 ###
 - Fixed window resize console error.
@@ -93,7 +129,6 @@
 - Fixed some bugs related to render shaders
 
 ### 0.0.1 ###
-Template Experimentation:
 - Added Fog
 - Added ambient occlusion (Mostly Broken)
 - Added Render Shaders

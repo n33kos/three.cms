@@ -2,12 +2,13 @@
 //pass the page ID to initData
 initData(param);
 global $tpl_args;
+include 'static/components/gameobjectCheck.comp';
 
 ?>
 <html>
     <head>
         <title><?php echo $tpl_args['title'];?></title>
-        <meta name="description" content="this is the description"/>
+        <meta name="description" content="<?php echo $tpl_args['summary'];?>"/>
         <?php 
             //--------------------SCRIPT INCLUDES ARRAY------------------------------------
             foreach($tpl_args['scriptIncludes'] as $key => $script){
@@ -93,9 +94,9 @@ global $tpl_args;
             var HEIGHT = window.innerHeight;
             var container = $("<?php echo $tpl_args['canvasTarget'];?>");
             <?php 
-                //custom init javascript
+                //custom init
                 if($tpl_args['customInits'] != ''){echo $tpl_args['customInits'];}
-                
+
                 //Render mode toggler
                 if($tpl_args['renderMode'] == 'WebGL'){
                     echo '
@@ -185,12 +186,56 @@ global $tpl_args;
             if($tpl_args['linearFog_bit'] == 1){echo 'scene.fog = new THREE.Fog( "' . $tpl_args['linearFogColor'] . '", ' . $tpl_args['linearFogNear'] . ', ' . $tpl_args['linearFogFar'] . ' );';}
             if($tpl_args['exponentialFog_bit'] == 1){echo 'scene.fog = new THREE.FogExp2( "' . $tpl_args['linearFogColor'] . '", ' . $tpl_args['exponentialFogDensity'] . ');';}
             if($tpl_args['customBody'] != ''){echo $tpl_args['customBody'];}
+            
+            //--------------------------------------COMPONENTS----------------------------------------
+                            //custom init components
+                if(isset($comp_args)){
+                    foreach($comp_args as $key => $value){
+                        
+                    }
+                }
+            if(count($comp_args) > 0){
+                echo 'var componentIteration = 0;';
+                foreach($comp_args as $key => $value){
+                    echo 'componentIteration++;';
+                    echo $value['init_script'];
+                    if($value['mesh'] != ''){
+                        echo 'var geometry' . $value['slug'] . ' = "' . $value['mesh'] . '";';
+                    }else{
+                        echo 'var geometry' . $value['slug'] . ' = new THREE.CubeGeometry( 1, 1, 1 );';
+                    }
+
+                    if($value['material'] != ''){
+                        echo 'var material' . $value['slug'] . ' = "' . $value['material'] . '";';
+                    }else{
+                        echo 'var material' . $value['slug'] . ' = defaultMaterial;';
+                    }
+
+                    echo 'var ' . $value['slug'] . ' = new THREE.Mesh( geometry' . $value['slug'] . ', material' . $value['slug'] . ' );';
+                    echo 'scene.add(' . $value['slug'] . ');';
+
+                    echo $value['slug'] . '.scale.set(' . $value['scale'] . ');';
+                    echo $value['slug'] . '.position.set(' . $value['position'] . ');';
+                    echo $value['slug'] . '.rotation.set(' . $value['rotation'] . ');';
+
+                    echo $value['main_script'];
+                }
+            }
+
             ?>
             //init camera
             camera.position = new THREE.Vector3(<?php echo $tpl_args['cameraPosition'];?>);
             //------------------------------------ANIMATE FUNCTION------------------------------------
             function animate() {
                 requestAnimationFrame(animate);
+                <?php 
+                    //custom component animation scripts
+                    if(isset($comp_args)){
+                        foreach($comp_args as $key => $value){
+                            echo $value['animation_script'];
+                        }
+                    }
+                ?>
             }
 
             //------------------------------------RENDER FUNCTION------------------------------------
@@ -271,11 +316,19 @@ global $tpl_args;
 
                     //CUSTOM RENDER JAVASCRIPT
                     if($tpl_args['customRender'] != ''){echo $tpl_args['customRender'];}
+                    
+                    //custom component render scripts
+                    if(isset($comp_args)){
+                        foreach($comp_args as $key => $value){
+                            echo $value['render_script'];
+                        }
+                    }
 
                 ?>
 
             };
             render();
+            animate();
         });
     </script>
     </body>

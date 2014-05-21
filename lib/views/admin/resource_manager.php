@@ -47,7 +47,9 @@ if(login_check($mysqli) == true) {
     		?>
 	    </head>
 	    <body>
+	    	<hr>
             <h1>Resource Manager (<?php echo ucwords($fileType) . 's'; ?>)</h1>
+            <hr>
 	            <?php
 	            	if(count($_FILES) > 0){
 						$allowedExts = array("gif", "jpeg", "jpg", "png", "js", "obj");

@@ -1,0 +1,6 @@
+<?php
+	$componentsArray = explode(',' , $tpl_args["components"]);
+	foreach ($componentsArray as $key => $value) {
+		$comp_args[] = getComponentBySlug($value);
+	}
+?>

@@ -27,9 +27,21 @@ if (login_check($mysqli) == true) {
             <hr>
                 <h3>Pages</h3>
                 <ul>
-                    <li><a href="admin/page_editor/1">Page Editor</a></li>
-                    <li><a href="admin/page_creator/1">Page Creator</a></li>
-                    <li><a href="admin/page_deleter/0">Page Deleter</a></li>
+                    <li>
+                        <a href="admin/page_manager/">Page Manager</a><br>
+                        <a href="admin/page_editor/0" style="color:#333;font-size:0.8em;margin-left:10px;">Page Editor</a><br>
+                        <a href="admin/page_creator/0" style="color:#333;font-size:0.8em;margin-left:10px;">Page Creator</a><br>
+                        <a href="admin/page_deleter/0" style="color:#333;font-size:0.8em;margin-left:10px;">Page Deleter</a>
+                    </li>
+                </ul>
+                <h3>Components</h3>
+                <ul>
+                    <li>
+                        <a href="admin/component_manager/">Component Manager</a><br>
+                        <a href="admin/component_editor/0" style="color:#333;font-size:0.8em;margin-left:10px;">Component Editor</a><br>
+                        <a href="admin/component_creator/0" style="color:#333;font-size:0.8em;margin-left:10px;">Component Creator</a><br>
+                        <a href="admin/component_deleter/0" style="color:#333;font-size:0.8em;margin-left:10px;">Component Deleter</a>
+                    </li>
                 </ul>
                 <h3>Users</h3>
                 <ul>

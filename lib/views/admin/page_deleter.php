@@ -38,8 +38,6 @@ if(login_check($mysqli) == true) {
                 <input type="submit" value="DELETE!">
                 <?php
                     foreach ($tpl_args as $key => $value){
-                        
-                        $isDisabled = ' disabled ';
 
                         if(is_object($value) || is_array($value)){
                             echo '<div>';

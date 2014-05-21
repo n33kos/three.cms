@@ -15,7 +15,7 @@ include_once 'static/functions/function_site_settings.php';
 global $tpl_settings;
 $tpl_settings = siteSettings();
 
-//set site-wide settings
+//define site-wide settings
 define('siteTitle', $tpl_settings['sitetitle']);
 define('baseURL', $tpl_settings['siteurl']);
 define('robotsBit', $tpl_settings['robotsbit']);
