@@ -38,7 +38,7 @@ if(login_check($mysqli) == true) {
                             $isDisabled = '';
                         }
 
-                        if($key == 'init_script' || $key == 'main_script' || $key == 'render_script' || $key == 'animation_script'){
+                        if($key == 'functions' || $key == 'init_script' || $key == 'main_script' || $key == 'render_script' || $key == 'animation_script'){
                             echo '<div>';
                                 echo '<label>' . $key . ':</label><br>';
                                 echo '<textarea rows="4" cols="50" title= "' . $key . '" name="' . $key . '" ' . $isDisabled . '>';

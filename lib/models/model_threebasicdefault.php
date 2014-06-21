@@ -39,6 +39,7 @@ function getComponentBySlug($compSlug){
     $comp_args['scale'] = $info['scale'];
     $comp_args['mesh'] = $info['mesh'];
     $comp_args['material'] = $info['material'];
+    $comp_args['functions'] = $info['functions'];
     $comp_args['init_script'] = $info['init_script'];
     $comp_args['main_script'] = $info['main_script'];
     $comp_args['render_script'] = $info['render_script'];

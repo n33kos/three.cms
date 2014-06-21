@@ -55,12 +55,10 @@ include 'static/components/gameobjectCheck.comp';
                     echo '<link rel="stylesheet" type="text/css" href="static/css/PointerLock.css">';
                 break;
             }
-
+            //--------------------STATS----------------------------------------
             if($tpl_args['showStats']){
                 echo '<script type="text/javascript" src="static/js/threejs/debug/stats.min.js" name="Stats"></script>';
             }
-            
-
         ?>
     <link rel="stylesheet" type="text/css" href="<?php echo view_path; ?>style.css">
     </head>
@@ -87,12 +85,12 @@ include 'static/components/gameobjectCheck.comp';
             var d = new THREE.Vector3();
             var scene = new THREE.Scene();
             var loader = new THREE.ObjectLoader();
-            var camera = new THREE.PerspectiveCamera(<?php echo $tpl_args['cameraPerspective'];?>, window.innerWidth / window.innerHeight, <?php echo $tpl_args['camNear'] . ', ' . $tpl_args['camFar'] ?>);
             var clock = new THREE.Clock();
             var delta = 0.2;
-            var WIDTH = window.innerWidth;
-            var HEIGHT = window.innerHeight;
             var container = $("<?php echo $tpl_args['canvasTarget'];?>");
+            var camera = new THREE.PerspectiveCamera(<?php echo $tpl_args['cameraPerspective'];?>, container.width() / container.height(), <?php echo $tpl_args['camNear'] . ', ' . $tpl_args['camFar'] ?>);
+            var WIDTH = container.width();
+            var HEIGHT = container.height();
             <?php 
                 //custom init
                 if($tpl_args['customInits'] != ''){echo $tpl_args['customInits'];}
@@ -188,12 +186,13 @@ include 'static/components/gameobjectCheck.comp';
             if($tpl_args['customBody'] != ''){echo $tpl_args['customBody'];}
             
             //--------------------------------------COMPONENTS----------------------------------------
-                            //custom init components
-                if(isset($comp_args)){
-                    foreach($comp_args as $key => $value){
-                        
+            if(isset($comp_args)){
+                foreach($comp_args as $key => $value){
+                    if($value['functions'] != ''){
+                        echo $value['functions'];                       
                     }
                 }
+            }
             if(count($comp_args) > 0){
                 echo 'var componentIteration = 0;';
                 foreach($comp_args as $key => $value){

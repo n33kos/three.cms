@@ -71,6 +71,7 @@ function updateComponent($mysqli,$theID){
     $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_STRING);
     $mesh = filter_input(INPUT_POST, 'mesh', FILTER_SANITIZE_STRING);
     $material = filter_input(INPUT_POST, 'material', FILTER_SANITIZE_STRING);
+    $functions = filter_input(INPUT_POST, 'functions', FILTER_UNSAFE_RAW);
     $init_script = filter_input(INPUT_POST, 'init_script', FILTER_UNSAFE_RAW);
     $main_script = filter_input(INPUT_POST, 'main_script', FILTER_UNSAFE_RAW);
     $render_script = filter_input(INPUT_POST, 'render_script', FILTER_UNSAFE_RAW);
@@ -80,9 +81,9 @@ function updateComponent($mysqli,$theID){
     /*---------------------------Prep Then execute Statement-------------------------*/
     /*-------------------------------------------------------------------------------*/
 
-    $prep_stmt = "UPDATE components SET slug=?, component_type=?, position=?, rotation=?, scale=?, mesh=?, material=?, init_script=?, main_script=?, render_script=?, animation_script=? WHERE id=?";
+    $prep_stmt = "UPDATE components SET slug=?, component_type=?, position=?, rotation=?, scale=?, mesh=?, material=?, functions=?, init_script=?, main_script=?, render_script=?, animation_script=? WHERE id=?";
     $update_stmt = $mysqli->prepare($prep_stmt);
-    $update_stmt->bind_param( "sssssssssssi", $slug, $component_type, $position, $rotation, $scale, $mesh, $material, $init_script, $main_script, $render_script, $animation_script, $theID);
+    $update_stmt->bind_param( "ssssssssssssi", $slug, $component_type, $position, $rotation, $scale, $mesh, $material, $functions, $init_script, $main_script, $render_script, $animation_script, $theID);
     
     // Execute the prepared query.
     if (!$update_stmt->execute()) {
@@ -109,6 +110,7 @@ function createComponent($mysqli){
     $scale = filter_input(INPUT_POST, 'scale', FILTER_SANITIZE_STRING);
     $mesh = filter_input(INPUT_POST, 'mesh', FILTER_SANITIZE_STRING);
     $material = filter_input(INPUT_POST, 'material', FILTER_SANITIZE_STRING);
+    $functions = filter_input(INPUT_POST, 'functions', FILTER_SANITIZE_STRING);
     $init_script = filter_input(INPUT_POST, 'init_script', FILTER_SANITIZE_STRING);
     $main_script = filter_input(INPUT_POST, 'main_script', FILTER_SANITIZE_STRING);
     $render_script = filter_input(INPUT_POST, 'render_script', FILTER_SANITIZE_STRING);
@@ -117,9 +119,9 @@ function createComponent($mysqli){
     /*-------------------------------------------------------------------------------*/
     /*---------------------------Prep Then execute Statement-------------------------*/
     /*-------------------------------------------------------------------------------*/
-    $prep_stmt = "INSERT INTO components (id, slug, component_type, position, rotation, scale, mesh, material, init_script, main_script, render_script, animation_script) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $prep_stmt = "INSERT INTO components (id, slug, component_type, position, rotation, scale, mesh, material, functions, init_script, main_script, render_script, animation_script) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $update_stmt = $mysqli->prepare($prep_stmt);
-    $update_stmt->bind_param( "isssssssssss", $id, $slug, $component_type, $position, $rotation, $scale, $mesh, $material, $init_script, $main_script, $render_script, $animation_script);
+    $update_stmt->bind_param( "issssssssssss", $id, $slug, $component_type, $position, $rotation, $scale, $mesh, $material, $functions, $init_script, $main_script, $render_script, $animation_script);
     
     // Execute the prepared query.
     if (!$update_stmt->execute()) {
@@ -149,6 +151,7 @@ function getComponent($compID){
     $comp_args['scale'] = $info['scale'];
     $comp_args['mesh'] = $info['mesh'];
     $comp_args['material'] = $info['material'];
+    $comp_args['functions'] = $info['functions'];
     $comp_args['init_script'] = $info['init_script'];
     $comp_args['main_script'] = $info['main_script'];
     $comp_args['render_script'] = $info['render_script'];

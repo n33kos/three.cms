@@ -4,15 +4,13 @@
 		- Add "Set Home Page ID" setting
 		- update schema
 	- Menu/Navigation Manager
-		Table Structure:
-			-id NOT UNIQUE - use this id to associate multiple menu item rows with a single menu name
-			-Menu Name - Should be the same for all menu items with the same ID
-			-Item Name
-			-Item URL
-			- update schema
+		- Fields:
+			- id NOT UNIQUE - use this id to associate multiple menu item rows with a single menu name
+			- Menu Name - Should be the same for all menu items with the same ID
+			- Item Name
+			- Item URL
+		- update schema
 	- Components
-		- Add functions field
-		- Create schema for components
 		- Integrate with existing .comp files.
 		- update schema
 	-Styles and Design
@@ -23,6 +21,7 @@
 		- Implement Jacasript
 - Threebasicdefault Template
 	- Add background color field
+	- per-page template selection
 	- Animation
 		-Add 'Enable Animation' bit.
 		-Add Animation custom script textarea
@@ -31,6 +30,7 @@
 	- Scene Transitions
 	- more complex post processing (Gods Rays, lens flare, bokeh, etc.)
 	- GUI
+	- rename controller
 	- update schema
 - System
 	- Display pages by title slug OR id (requires site settings option)
@@ -47,8 +47,14 @@
 - Easy Install
 
 ### Bugs ###
-- Second component in array/list not coming through. Maybe SQL query is bad.
-- After creating things you get logged out
+- After creating new things you get logged out
+
+### 0.0.11 ###
+- Added Functions field to components
+- Added temporaty page for testing physics plugins
+- Added cannon.js and physijs for handling of physics.
+- Physi.js has been modified from its current git status (removed all instances of '.useQuaternion' and converted old euler function to 'makeRotationFromEuler')
+- Added Tween.js
 
 ### 0.0.10 ###
 - Added components page to admin controller
@@ -57,6 +63,7 @@
 - Added Component manager, editor, and creator views
 - Added components table.
 - Integrated components array in threebasicdefault view.
+- Fixed component bugs
 
 ### 0.0.9 ###
 - Fixed window resize console error.
