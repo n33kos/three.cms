@@ -1,7 +1,9 @@
 <?php 
-//pass the page ID to initData
-initData(param);
 global $tpl_args;
+
+//pass the page ID to initData
+initData(pageID);
+
 include 'static/components/gameobjectCheck.comp';
 
 ?>
@@ -9,12 +11,12 @@ include 'static/components/gameobjectCheck.comp';
     <head>
         <title><?php echo $tpl_args['title'];?></title>
         <meta name="description" content="<?php echo $tpl_args['summary'];?>"/>
+        <meta charset="UTF-8">
         <?php 
             //--------------------SCRIPT INCLUDES ARRAY------------------------------------
             foreach($tpl_args['scriptIncludes'] as $key => $script){
                 echo '<script type="text/javascript" src="' . $script . '" name="' . $key . '"></script>';
             }
-
             //--------------------DEPENDENCY CHECKS----------------------------------------
             if($tpl_args['renderMode'] == 'ASCII'){
                 echo '<script type="text/javascript" src="static/js/threejs/effects/AsciiEffect.js" name="ASCII"></script>';
@@ -24,6 +26,9 @@ include 'static/components/gameobjectCheck.comp';
             }
             if($tpl_args['aa_bit'] == 1){
                 echo '<script type="text/javascript" src="static/js/threejs/shaders/FXAAShader.js" name="fxaaShader"></script>';
+            } 
+            if($tpl_args['enablePhysics_bit'] == 1){
+                echo '<script type="text/javascript" src="static/js/physi.js"></script>';
             }
             //--------------------PIXEL SHADERS--------------------------------------------
             if($tpl_args['usePixelShaders'] == 1 || $tpl_args['ao_bit'] == 1 || $tpl_args['aa_bit'] ==1){
@@ -83,7 +88,17 @@ include 'static/components/gameobjectCheck.comp';
             //-------------------------------------INITIALIZATION-------------------------------------
             var controls;
             var d = new THREE.Vector3();
-            var scene = new THREE.Scene();
+            var scene = <?php
+                if($tpl_args['enablePhysics_bit'] == 1){
+                    echo 'new Physijs.Scene();';
+                    echo "Physijs.scripts.worker = 'static/js/physijs_worker.js';";
+                    echo "Physijs.scripts.ammo = 'static/js/ammo.js';";
+                    echo 'scene.setGravity(new THREE.Vector3( 0, -10, 0 ));';
+                }else{
+                    echo 'new THREE.Scene();';
+                }
+            ?>
+
             var loader = new THREE.ObjectLoader();
             var clock = new THREE.Clock();
             var delta = 0.2;
@@ -193,7 +208,7 @@ include 'static/components/gameobjectCheck.comp';
                     }
                 }
             }
-            if(count($comp_args) > 0){
+            if($componentsArray[0] != ' '){
                 echo 'var componentIteration = 0;';
                 foreach($comp_args as $key => $value){
                     echo 'componentIteration++;';
@@ -311,6 +326,10 @@ include 'static/components/gameobjectCheck.comp';
 
                     if($tpl_args['showStats']){
                         echo 'stats.update();';
+                    }
+
+                    if($tpl_args['enablePhysics_bit'] == 1){
+                        echo 'scene.simulate();';
                     }
 
                     //CUSTOM RENDER JAVASCRIPT

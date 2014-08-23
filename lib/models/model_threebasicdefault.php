@@ -10,12 +10,6 @@ class Model_threebasicdefault extends Model
 }
 
 
-function initSettings($getID){
-    
-    global $tpl_settings;
-    $tpl_settings = getSettings();
-    
-}
 function initData($getID){
     
     global $tpl_args;
@@ -112,6 +106,7 @@ function getTable($pageID){
     $tpl_args['renderMode'] = $info['rendermode'];
     $tpl_args['ao_bit'] = $info['aobit'];
     $tpl_args['aa_bit'] = $info['aabit'];
+    $tpl_args['enablePhysics_bit'] = $info['enablePhysics_bit'];
     $tpl_args['controlMode'] = $info['controlmode'];
     $tpl_args['cameraPosition'] = $info['cameraposition'];
     $tpl_args['cameraPerspective'] = $info['cameraperspective'];

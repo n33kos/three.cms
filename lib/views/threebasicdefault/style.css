@@ -21,7 +21,6 @@ canvas {
 	overflow-y:scroll;
 	font-size:12px;
 	border:1px solid #ccc;
-    background: rgba(255,255,255,0.5);
     visibility: hidden;
 }
 #menu {
@@ -31,7 +30,6 @@ canvas {
 	overflow-y:scroll;
 	font-size:12px;
 	border:1px solid #ccc;
-    background: rgba(255,255,255,0.5);
     visibility: hidden;
 }
 #menu li,
@@ -50,7 +48,6 @@ canvas {
 	overflow-y:scroll;
 	font-size:12px;
 	border:1px solid #ccc;
-    background: rgba(255,255,255,0.75);
 }
 
 #column{
@@ -58,11 +55,9 @@ canvas {
 	float:left;
 	margin-left:20px;
 	border:1px solid #ccc;
-    background: rgba(255,255,255,0.5);
 }
 
 #GUI{
-    background: rgba(255,255,255,0.5);
     width:100%;
     position:absolute;
     bottom:0;

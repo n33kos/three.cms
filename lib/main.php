@@ -21,9 +21,8 @@ define('baseURL', $tpl_settings['siteurl']);
 define('robotsBit', $tpl_settings['robotsbit']);
 define('adminContact', $tpl_settings['admincontact']);
 define('homeController', $tpl_settings['homecontroller']);
-if($tpl_settings['timezone'] != ''){
-	date_default_timezone_set($tpl_settings['timezone']);
-}
+define('homepageid', $tpl_settings['homepageid']);
+date_default_timezone_set($tpl_settings['timezone']);
 
 // End Configuration
 
@@ -136,24 +135,21 @@ function run_page($page_name)
 	else
 		$use_main_template = true;
 
-    if(strtolower($controller_name) == 'controller_admin'){
-    	// If the controller is the admin page, we route all pages through the index action
+    // if the page string given to us doesn't have a name, use default page
+	if ((count($page_name_split) == 1) || ($page_name_split[1] == ''))
 		$action_name = 'index';
-	}elseif((count($page_name_split) == 1) || ($page_name_split[1] == '')){
-    	// if the page string given to us doesn't have a name, use default page
-		$action_name = 'index';
-	}else{
+	else
 		$action_name = $page_name_split[1];
-	}
 
     // make sure the action method exists
 	if (!in_array($action_name, $controller->allowed_actions)) die('Action ' . $action_name . ' not found in controller ' . $controller_name . '.');
 
     // if parameters exist (eg controller/action/lol/lol/lol, get them
-	if (count($page_name_split) > 2)
-		$params = array_slice($page_name_split, 2);
-	else
-		$params = array();
+	if (is_numeric(param)){
+		define('pageID', param);
+	}else{
+		define('pageID', homepageid);
+	}
 
 	$view_array = array();
         $controller->view_array = &$view_array;

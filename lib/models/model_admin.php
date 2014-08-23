@@ -159,55 +159,6 @@ function getComponent($compID){
 
     return $comp_args;
 }
-function getSettings(){
-    // Connects to your Database 
-    mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
-    mysql_select_db(mysql_database) or die(mysql_error()); 
-    $data = mysql_query("SELECT * FROM site_settings WHERE id = 1") 
-    or die(mysql_error());
-    //grab those vars
-    $info = mysql_fetch_array($data);
-
-    $tpl_settings['sitetitle'] = $info['sitetitle'];
-    $tpl_settings['siteurl'] = $info['siteurl'];
-    $tpl_settings['admincontact'] = $info['admincontact'];
-    $tpl_settings['timezone'] = $info['timezone'];
-    $tpl_settings['robotsbit'] = $info['robotsbit'];
-    $tpl_settings['homecontroller'] = $info['homecontroller'];
-
-    return $tpl_settings;
-}
-function setSettings($mysqli){
-    /*-------------------------------------------------------------------------------*/
-    /*---------------------------Get POST Variables----------------------------------*/
-    /*-------------------------------------------------------------------------------*/
-    $theID = 1;
-    $sitetitle = filter_input(INPUT_POST, 'sitetitle', FILTER_SANITIZE_STRING);
-    $siteurl = filter_input(INPUT_POST, 'siteurl', FILTER_SANITIZE_STRING);
-    $admincontact = filter_input(INPUT_POST, 'admincontact', FILTER_SANITIZE_STRING);
-    $timezone = filter_input(INPUT_POST, 'timezone', FILTER_SANITIZE_STRING);
-    $robotsbit = filter_input(INPUT_POST, 'robotsbit', FILTER_SANITIZE_STRING);
-    $homecontroller = filter_input(INPUT_POST, 'homecontroller', FILTER_SANITIZE_STRING);
-
-    /*-------------------------------------------------------------------------------*/
-    /*---------------------------Prep Then execute Statement-------------------------*/
-    /*-------------------------------------------------------------------------------*/
-    $prep_stmt = "UPDATE site_settings SET sitetitle=?, siteurl=?, admincontact=?, timezone=?, robotsbit=?, homecontroller=? WHERE id=?";
-    $update_stmt = $mysqli->prepare($prep_stmt);
-    $update_stmt->bind_param( "ssssisi", $sitetitle, $siteurl, $admincontact, $timezone, $robotsbit, $homecontroller, $theID);
-    
-    // Execute the prepared query.
-    if (!$update_stmt->execute()) {
-        header('Location: ?error=1');
-        echo "Execute failed: (" . $update_stmt->errno . ") " . $update_stmt->error;
-        print('ERROR!');
-    }else{
-        $update_stmt->close();
-        header('Location: ?success=1');
-        print('SUCCESS!');
-    }
-    
-}
 function getPages(){
     // Connects to your Database 
     mysql_connect(mysql_server, mysql_username, mysql_password) or die(mysql_error()); 
@@ -223,6 +174,7 @@ function getPages(){
 
     return;
 }
+//Sometime change this to getPage
 function getTable($pageID){
     require_once 'static/classes/class_light.php';
     require_once 'static/classes/class_material.php';
@@ -288,6 +240,7 @@ function getTable($pageID){
     $tpl_args['renderMode'] = $info['rendermode'];
     $tpl_args['ao_bit'] = $info['aobit'];
     $tpl_args['aa_bit'] = $info['aabit'];
+    $tpl_args['enablePhysics_bit'] = $info['enablePhysics_bit'];
     $tpl_args['controlMode'] = $info['controlmode'];
     $tpl_args['cameraPosition'] = $info['cameraposition'];
     $tpl_args['cameraPerspective'] = $info['cameraperspective'];
@@ -400,6 +353,7 @@ function createPage($mysqli){
     $renderMode =     filter_input(INPUT_POST, 'renderMode', FILTER_SANITIZE_STRING);
     $ao_bit =     filter_input(INPUT_POST, 'ao_bit', FILTER_SANITIZE_STRING);
     $aa_bit =     filter_input(INPUT_POST, 'aa_bit', FILTER_SANITIZE_STRING);
+    $enablePhysics_bit =     filter_input(INPUT_POST, 'enablePhysics_bit', FILTER_SANITIZE_STRING);
     $controlMode =     filter_input(INPUT_POST, 'controlMode', FILTER_SANITIZE_STRING);
     $cameraPosition =     filter_input(INPUT_POST, 'cameraPosition', FILTER_SANITIZE_STRING);
     $cameraPerspective =     filter_input(INPUT_POST, 'cameraPerspective', FILTER_SANITIZE_STRING);
@@ -499,9 +453,9 @@ function createPage($mysqli){
     /*-------------------------------------------------------------------------------*/
     /*---------------------------Prep Then execute Statement-------------------------*/
     /*-------------------------------------------------------------------------------*/
-    $prep_stmt = "INSERT INTO pages (id, publicationDate, title, summary, pagecontent, canvastarget, scriptincludes, usepixelshaders, shaderincludes, showstats, rendermode, aobit, aabit, controlmode, cameraposition, cameraperspective, camnear, camfar, lights, materials, realtimeshadowsbit, realtimeshadowsmooth, linearfogbit, linearfogcolor, linearfognear, linearfogfar, exponentialfogbit, exponentialfogcolor, exponentialfogdensity, scenefile, scenetex, useskybox, skyboxscale, skyboxtextures, custominits, custombody, customrender, components) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $prep_stmt = "INSERT INTO pages (id, publicationDate, title, summary, pagecontent, canvastarget, scriptincludes, usepixelshaders, shaderincludes, showstats, rendermode, aobit, aabit, enablePhysics_bit, controlmode, cameraposition, cameraperspective, camnear, camfar, lights, materials, realtimeshadowsbit, realtimeshadowsmooth, linearfogbit, linearfogcolor, linearfognear, linearfogfar, exponentialfogbit, exponentialfogcolor, exponentialfogdensity, scenefile, scenetex, useskybox, skyboxscale, skyboxtextures, custominits, custombody, customrender, components) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $insert_stmt = $mysqli->prepare($prep_stmt);
-    $insert_stmt->bind_param( "issssssisisiisssssssisisssissssissssss", $theID, $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $components);
+    $insert_stmt->bind_param( "issssssisisiiisssssssisisssissssissssss", $theID, $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $enablePhysics_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $components);
     
     // Execute the prepared query.
     if (!$insert_stmt->execute()) {
@@ -509,8 +463,7 @@ function createPage($mysqli){
         echo "Execute failed: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
         print('ERROR!');
     }else{
-        print('SUCCESS!');
-        $pageLocation = 'Location: ' . baseURL . '/admin/page_editor/' . $insert_stmt->insert_id;
+        $pageLocation = 'Location: ?success=1';
         $insert_stmt->close();
         header($pageLocation);
     }
@@ -565,6 +518,7 @@ function updatePage($mysqli, $theID){
     $renderMode =     filter_input(INPUT_POST, 'renderMode', FILTER_SANITIZE_STRING);
     $ao_bit =     filter_input(INPUT_POST, 'ao_bit', FILTER_SANITIZE_STRING);
     $aa_bit =     filter_input(INPUT_POST, 'aa_bit', FILTER_SANITIZE_STRING);
+    $enablePhysics_bit =     filter_input(INPUT_POST, 'enablePhysics_bit', FILTER_SANITIZE_STRING);
     $controlMode =     filter_input(INPUT_POST, 'controlMode', FILTER_SANITIZE_STRING);
     $cameraPosition =     filter_input(INPUT_POST, 'cameraPosition', FILTER_SANITIZE_STRING);
     $cameraPerspective =     filter_input(INPUT_POST, 'cameraPerspective', FILTER_SANITIZE_STRING);
@@ -665,9 +619,9 @@ function updatePage($mysqli, $theID){
     /*---------------------------Prep Then execute Statement-------------------------*/
     /*-------------------------------------------------------------------------------*/
 
-    $prep_stmt = "UPDATE pages SET publicationDate=?, title=?, summary=?, pagecontent=?, canvastarget=?, scriptincludes=?, usepixelshaders=?, shaderincludes=?, showstats=?, rendermode=?, aobit=?, aabit=?, controlmode=?, cameraposition=?, cameraperspective=?, camnear=?, camfar=?, lights=?, materials=?, realtimeshadowsbit=?, realtimeshadowsmooth=?, linearfogbit=?, linearfogcolor=?, linearfognear=?, linearfogfar=?, exponentialfogbit=?, exponentialfogcolor=?, exponentialfogdensity=?, scenefile=?, scenetex=?, useskybox=?, skyboxscale=?, skyboxtextures=?, custominits=?, custombody=?, customrender=?, components=? WHERE id=?";
+    $prep_stmt = "UPDATE pages SET publicationDate=?, title=?, summary=?, pagecontent=?, canvastarget=?, scriptincludes=?, usepixelshaders=?, shaderincludes=?, showstats=?, rendermode=?, aobit=?, aabit=?, enablePhysics_bit=?, controlmode=?, cameraposition=?, cameraperspective=?, camnear=?, camfar=?, lights=?, materials=?, realtimeshadowsbit=?, realtimeshadowsmooth=?, linearfogbit=?, linearfogcolor=?, linearfognear=?, linearfogfar=?, exponentialfogbit=?, exponentialfogcolor=?, exponentialfogdensity=?, scenefile=?, scenetex=?, useskybox=?, skyboxscale=?, skyboxtextures=?, custominits=?, custombody=?, customrender=?, components=? WHERE id=?";
     $update_stmt = $mysqli->prepare($prep_stmt);
-    $update_stmt->bind_param( "ssssssisisiisssssssisisssissssissssssi", $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $components, $theID);
+    $update_stmt->bind_param( "ssssssisisiiisssssssisisssissssissssssi", $publicationDate, $title, $summary, $pageContent, $canvasTarget, $scriptIncludes, $usePixelShaders, $shaderIncludes, $showStats, $renderMode, $ao_bit, $aa_bit, $enablePhysics_bit, $controlMode, $cameraPosition, $cameraPerspective, $camNear, $camFar, $lights, $materials, $realtimeShadows_bit, $realtimeShadowSmooth, $linearFog_bit, $linearFogColor, $linearFogNear, $linearFogFar, $exponentialFog_bit, $exponentialFogColor, $exponentialFogDensity, $sceneFile, $sceneTex, $useSkybox, $skyboxScale, $skyboxTextures, $customInits, $customBody, $customRender, $components, $theID);
     
     // Execute the prepared query.
     if (!$update_stmt->execute()) {

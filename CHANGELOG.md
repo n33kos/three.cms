@@ -1,7 +1,7 @@
 ### To-Do ###
 - Admin Panel
 	- Settings Page
-		- Add "Set Home Page ID" setting
+		- Probably add more fields
 		- update schema
 	- Menu/Navigation Manager
 		- Fields:
@@ -35,7 +35,7 @@
 - System
 	- Display pages by title slug OR id (requires site settings option)
 	- Mod_Rewrite Upgrades
-	- Extract Functions from code into files
+	- Extract universal Functions from code into files
 	- Review Model -> Action relationship.
 
 ### Wishlist ####
@@ -47,13 +47,19 @@
 - Easy Install
 
 ### Bugs ###
-- After creating new things you get logged out
+- After creating new things you get logged out sometimes
+- Component creation is broken
+
+### 0.0.12 ###
+- Integrated physics bit into threebasicdefault view
+- Found and crushed bug in gameobject components
+- Added default homepage id setting in site settings
+- Replaced cannon.js with ammo.js because its better supported by physijs
 
 ### 0.0.11 ###
 - Added Functions field to components
-- Added temporaty page for testing physics plugins
+- Added temporary page for testing physics plugins
 - Added cannon.js and physijs for handling of physics.
-- Physi.js has been modified from its current git status (removed all instances of '.useQuaternion' and converted old euler function to 'makeRotationFromEuler')
 - Added Tween.js
 
 ### 0.0.10 ###

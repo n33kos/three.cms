@@ -20,7 +20,7 @@
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.getElementById( 'viewport' ).appendChild( renderer.domElement );
 
-        scene = new Physijs.Scene({ fixedTimeStep: 1 / 120 });
+        scene = new Physijs.Scene();
         scene.setGravity(new THREE.Vector3( 0, -10, 0 ));
 
         camera = new THREE.PerspectiveCamera(

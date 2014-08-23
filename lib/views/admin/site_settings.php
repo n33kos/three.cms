@@ -1,6 +1,5 @@
 <?php 
 
-initSettings();
 global $tpl_settings;
 
 include_once 'static/functions/function_users.php';
